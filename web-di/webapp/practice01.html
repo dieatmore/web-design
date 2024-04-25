@@ -2,18 +2,29 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>table</title>
+    <style type="text/css"></style>
   </head>
   <body>
-    <div>
-      <h1>Example 01</h1>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum
-        blanditiis at ipsum optio perspiciatis, dolore et nobis itaque, fuga
-        vero odit accusamus cupiditate! Ea ut quam repudiandae animi recusandae,
-        in corporis tenetur?
-      </p>
-    </div>
+    <table width="300" height="100" align="center" border="1" cellspacing="0">
+      <caption>关于rowspan和colspan的表</caption>
+
+      <tbody>
+        <tr>
+          <td rowspan="2"></td>
+          <td colspan="2"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="2"></td>
+        </tr>
+        <tr>
+          <td colspan="2"></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
   </body>
 </html>
