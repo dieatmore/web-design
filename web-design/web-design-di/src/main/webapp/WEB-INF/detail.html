@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>实验室详情</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.2/dist/echarts.min.js"></script>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        .container-all {
+            width: 100%;
+            height: 100%;
+            /*background: green;*/
+            background-color: #f9fafb;
+        }
+        .header-all {
+            display: flex;
+            height: 6.67vh;
+            background-color: #f9fafb;
+            width: 100%;
+        }
+        .header-all > img {
+            margin-top: 1vh;
+            margin-left: 15vw;
+        }
+        .header-inf {
+            margin-top: 1vh;
+            display: inline-block;
+            margin-right: 10vw;
+            margin-left: auto;
+            align-content: center;
+        }
+        .header-inf > a {
+            color: rgba(0, 0, 0, 0.49);
+            margin: 0 0.5vw;
+            text-decoration: none;
+        }
+        .header-inf >a:hover {
+            color: black;
+            transition: 0.5s;
+        }
+        .header {
+            height: 72px;
+            background-color: #1F343A;
+            color: white;
+            font-size: larger;
+            font-weight: bolder;
+            align-content: center;
+        }
+        .header h2 {
+            text-align: center;
+        }
+
+        .container-detail {
+            display: flex;
+            max-width: 1420px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: #f8f9fa;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            gap: 3rem;
+        }
+
+        .image-detail img {
+            width: 800px;
+            height: 700px;
+            object-fit: cover;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .image-detail img:hover {
+            transform: scale(1.02);
+        }
+
+        .detail-lab {
+            flex: 1;
+            padding: 1.5rem;
+        }
+
+        .detail-lab p {
+            margin: 2rem 0;
+            padding: 1rem 1rem;
+            background: white;
+            border-left: 4px solid #4285f4;
+            border-radius: 0 8px 8px 0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            font-size: 1.1rem;
+        }
+
+        .detail-s {
+            color: #4285f4;
+            font-weight: bold;
+        }
+        .footer-me {
+            background-color: #1F343A;
+            text-align: center;
+            height: 100px;
+            margin-top: 102px;
+            padding-top: 20px;
+        }
+        .back-n {
+            margin-top: 40px;
+            margin-left:40px;
+            border: 2px solid black;
+            color: black;
+            border-radius: 4px;
+            width: 80px;
+            font-weight: bolder;
+            font-size: 20px;
+        }
+        .back-n:hover {
+            background-color: white;
+            color: #4285f4;
+            border: 2px solid #4285f4;
+        }
+    </style>
+</head>
+<body>
+<div class="container-all">
+    <div class="header-all">
+        <img src="resources/schoolbadge.png">
+        <div class="header-inf">
+            <a href="">数字东林</a>|
+            <a href="">电子邮件</a>|
+            <a href="">领导信箱</a>|
+            <a href="">校园电话</a>|
+            <a href="">校园地图</a>
+        </div>
+    </div>
+    <div class="header">
+        <h2 id="headerDetail"></h2>
+    </div>
+    <button type="button" class="btn btn-outline-secondary back-n" onclick="window.location.href='lab';">返回</button>
+    <div class="container-detail">
+        <div class="image-detail">
+            <img id="detailImage" alt="">
+        </div>
+        <div id="labInfo" class="detail-lab">
+        </div>
+    </div>
+    <div class="footer-me">
+        <p style="color: #eeeeee;margin-top: 25px" >地址‌：黑龙江省哈尔滨市香坊区和兴路26号<span style="margin-left: 45px">邮编‌：150040</span><span style="margin-left: 45px"> 信息公开工作办公室：0451-82191631（咨询时间：工作日8:30-11:30、14:00-17:00，节假日除外）</span></p>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+<script>
+    // 获取 URL 参数
+    const urlParams = new URLSearchParams(window.location.search);
+    const number = urlParams.get('labNumber');
+
+
+    const labData = [
+        {
+            labNumber: 901,
+            labStatus: '使用中',
+            labWhat: '软件工程',
+            labImage: 'https://news.nefu.edu.cn/__local/4/7E/41/75D9FD58A81CE99F1052BBBD56C_56044E78_2C1073.jpg',
+            detail: '本实验室专注于软件工程领域，配备先进的开发工具和服务器资源。团队成员在此进行软件项目的全生命周期管理，包括需求分析、设计、编码和测试，致力于打造高质量、可维护的软件系统。'
+        },
+        {
+            labNumber: 902,
+            labStatus: '空闲',
+            labWhat: '计算机科学与技术',
+            labImage: 'https://news.nefu.edu.cn/__local/7/42/23/6312B3778D09CCE42852117FE57_4852C49E_10E3A84.jpg',
+            detail: '此实验室聚焦计算机科学与技术研究，涵盖算法优化、数据结构设计等方向。拥有高性能计算设备，为科研人员提供良好的实验环境，助力推动计算机领域的技术创新。'
+        },
+        {
+            labNumber: 903,
+            labStatus: '使用中',
+            labWhat: '大数据',
+            labImage: 'https://news.nefu.edu.cn/__local/7/7C/B3/B96EE5BDEFF542C436CB620550F_C6838F1F_4D4F65.jpg',
+            detail: '大数据实验室拥有海量数据存储和处理设备，专业团队在此进行数据挖掘、分析和可视化工作。通过对大数据的深度剖析，为各行业提供有价值的决策支持和解决方案。'
+        },
+        {
+            labNumber: 904,
+            labStatus: '空闲',
+            labWhat: '人工智能',
+            labImage: 'https://news.nefu.edu.cn/__local/B/CD/37/BB0F4DDC9C74B185B0C508172E1_95BD540E_1457C7.jpg',
+            detail: '人工智能实验室专注于机器学习、深度学习等前沿技术研究。配备先进的 GPU 集群，用于训练复杂的神经网络模型，致力于开发具有智能决策和自主学习能力的系统。'
+        },
+        {
+            labNumber: 905,
+            labStatus: '使用中',
+            labWhat: '软件工程',
+            labImage: 'https://news.nefu.edu.cn/__local/8/12/54/E8D4AD25492322C84FEFAA1C3C2_D7367C34_A6A1E3.jpg',
+            detail: '该软件工程实验室注重软件质量和效率提升，采用敏捷开发方法。团队成员在这进行代码审查、持续集成和自动化测试，确保软件产品能够快速迭代并满足用户需求。'
+        },
+        {
+            labNumber: 906,
+            labStatus: '空闲',
+            labWhat: '计算机科学与技术',
+            labImage: 'https://news.nefu.edu.cn/__local/4/F2/04/C6BAD555FE7D4E9F7638EED7D9B_78CC48FA_BAA51F.jpg',
+            detail: '计算机科学与技术实验室开展计算机体系结构、操作系统等方面的研究。拥有多台高性能工作站，为学生和研究人员提供实践和探索的平台，促进学科知识的创新与发展。'
+        },
+        {
+            labNumber: 907,
+            labStatus: '使用中',
+            labWhat: '大数据',
+            labImage: 'https://news.nefu.edu.cn/__local/1/B3/F5/0EB531C57434BBA541D88808A2E_E8993970_126A44A.jpg',
+            detail: '本大数据实验室专注于实时数据处理和流计算技术。通过分布式计算框架，对实时产生的海量数据进行快速分析，为企业提供实时的业务洞察和决策依据。'
+        },
+        {
+            labNumber: 908,
+            labStatus: '空闲',
+            labWhat: '人工智能',
+            labImage: 'https://news.nefu.edu.cn/__local/3/58/5F/5C8C00588C569A38C9906C38307_ECA0EE4D_1502D3.jpg',
+            detail: '人工智能实验室致力于自然语言处理和计算机视觉领域的研究。利用先进的算法和模型，实现语音识别、图像分类等功能，推动人工智能技术在实际场景中的应用。'
+        },
+        {
+            labNumber: 909,
+            labStatus: '使用中',
+            labWhat: '软件工程',
+            labImage: 'https://news.nefu.edu.cn/__local/6/56/56/C5D14F0009ED25C0E0029F871D4_8493D692_AA5F7.jpg',
+            detail: '软件工程实验室专注于软件安全和隐私保护。团队成员在此进行安全漏洞分析、加密算法研究等工作，为软件系统的安全性和用户隐私提供有力保障。'
+        },
+        {
+            labNumber: 910,
+            labStatus: '空闲',
+            labWhat: '计算机科学与技术',
+            labImage: 'https://news.nefu.edu.cn/__local/3/B5/F5/26B8A6C66542179A5448E6DAD7D_5C1ABA24_64A64F.jpg',
+            detail: '该实验室主要研究计算机网络和通信技术。拥有专业的网络设备和测试环境，开展网络协议优化、网络安全防护等方面的实验，提升网络性能和可靠性。'
+        },
+        {
+            labNumber: 911,
+            labStatus: '使用中',
+            labWhat: '大数据',
+            labImage: 'https://news.nefu.edu.cn/__local/B/CC/42/7878F46A878D627306CF902E7F8_39B4235C_F289B3.jpg',
+            detail: '大数据实验室聚焦于数据仓库和数据治理。通过建立完善的数据管理体系，对海量数据进行清洗、整合和存储，为企业提供高质量的数据资产和数据分析服务。'
+        },
+        {
+            labNumber: 912,
+            labStatus: '空闲',
+            labWhat: '人工智能',
+            labImage: 'https://news.nefu.edu.cn/__local/5/35/67/D2DA59939DC239B563337CD6C5E_870D8C50_B918EF.jpg',
+            detail: '人工智能实验室在强化学习和智能机器人领域开展研究。通过模拟智能体的决策过程，开发具有自主学习和适应能力的机器人，推动人工智能在工业和服务领域的应用。'
+        },
+        {
+            labNumber: 913,
+            labStatus: '使用中',
+            labWhat: '软件工程',
+            labImage: 'https://news.nefu.edu.cn/__local/7/F4/85/0CF3D4DBB363BF8ACCEE18FC1A8_98D8AE6E_3533AE1.jpg',
+            detail: '此软件工程实验室专注于移动应用开发和跨平台技术。团队成员使用先进的开发框架，开发出兼容多种设备的移动应用，满足用户在不同场景下的使用需求。'
+        },
+        {
+            labNumber: 914,
+            labStatus: '空闲',
+            labWhat: '计算机科学与技术',
+            labImage: 'https://news.nefu.edu.cn/__local/B/48/63/0238DAEA6FC3FD3FBF5B0A25139_02C73DA2_19BF66D.jpg',
+            detail: '计算机科学与技术实验室研究量子计算和新型计算模型。探索量子算法和量子通信技术，为未来计算机科学的发展提供理论和实践基础。'
+        },
+        {
+            labNumber: 915,
+            labStatus: '使用中',
+            labWhat: '大数据',
+            labImage: 'https://news.nefu.edu.cn/__local/9/09/F5/96136B2BE5379621EBBCEC9D20C_A91B2E9D_C2A073.jpg',
+            detail: '大数据实验室致力于大数据可视化和交互式分析。通过可视化工具将复杂的数据以直观的方式呈现，帮助用户快速理解数据背后的信息，做出科学的决策。'
+        },
+        {
+            labNumber: 916,
+            labStatus: '空闲',
+            labWhat: '人工智能',
+            labImage: 'https://news.nefu.edu.cn/__local/7/0C/96/264307BB9EAB02BED3C261647E7_0A978A57_CCA030.jpg',
+            detail: '人工智能实验室在情感计算和人机交互领域开展研究。通过分析人类情感和行为模式，开发更加智能、人性化的交互系统，提升用户体验。'
+        },
+        {
+            labNumber: 917,
+            labStatus: '使用中',
+            labWhat: '软件工程',
+            labImage: 'https://news.nefu.edu.cn/__local/6/4B/21/FCE76B23A3349BB2B41BE88018C_06F359FF_B388AD.jpg',
+            detail: '软件工程实验室专注于云计算和微服务架构。通过云平台和微服务技术，实现软件系统的弹性扩展和高效部署，提升系统的可用性和可维护性。'
+        },
+        {
+            labNumber: 918,
+            labStatus: '空闲',
+            labWhat: '计算机科学与技术',
+            labImage: 'https://news.nefu.edu.cn/__local/8/7E/D5/AA1F1EF6F6D6A2556F911B3D452_14EE78BD_1180BA3.jpg',
+            detail: '该实验室研究计算机图形学和虚拟现实技术。通过先进的图形处理算法和硬件设备，创建逼真的虚拟场景，为游戏、教育等领域提供创新的解决方案。'
+        },
+        {
+            labNumber: 919,
+            labStatus: '使用中',
+            labWhat: '大数据',
+            labImage: 'https://news.nefu.edu.cn/__local/7/6E/36/24C242665B2671FBE32DE2D17C8_75D856B0_5C6D45.jpg',
+            detail: '大数据实验室聚焦于生物大数据和医疗数据分析。通过对生物和医疗数据的挖掘和分析，为疾病诊断、治疗和预防提供科学依据，推动医疗行业的发展。'
+        },
+        {
+            labNumber: 920,
+            labStatus: '空闲',
+            labWhat: '人工智能',
+            labImage: 'https://news.nefu.edu.cn/__local/1/09/29/E74B50F90B72D5E57C696FC1ADB_6A99F235_706AC9.jpg',
+            detail: '人工智能实验室在智能推荐系统和个性化服务领域开展研究。通过分析用户行为和偏好，为用户提供精准的推荐服务，提升用户满意度和业务转化率。'
+        }
+    ];
+    const matchedLab = labData.find(lab => lab.labNumber.toString() === number);
+
+    const labDetailSpan = document.getElementById('headerDetail');
+    labDetailSpan.textContent = `实验室${matchedLab.labNumber}详情`;
+
+    const labImageElement = document.getElementById('detailImage');
+    labImageElement.src = matchedLab.labImage;
+
+    const labInfoDiv = document.getElementById('labInfo');
+
+    // 动态插入数据
+    labInfoDiv.innerHTML = `
+    <p><span class="detail-s">实验室编号</span>: ${matchedLab.labNumber}</p>
+    <p><span class="detail-s">实验室状态</span>: ${matchedLab.labStatus}</p>
+    <p><span class="detail-s">所属专业</span>: ${matchedLab.labWhat}</p>
+    <p><span class="detail-s">实验室描述</span>: ${matchedLab.detail}</p>
+`;
+</script>
+</body>
+</html>

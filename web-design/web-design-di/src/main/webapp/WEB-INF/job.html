@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>就业指南</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.2/dist/echarts.min.js"></script>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        .container-all {
+            width: 100%;
+            height: 100%;
+            /*background: green;*/
+            background-color: #f9fafb;
+        }
+        .header-all {
+            display: flex;
+            height: 6.67vh;
+            background-color: #f9fafb;
+            width: 100%;
+        }
+        .header-all > img {
+            margin-top: 1vh;
+            margin-left: 15vw;
+        }
+        .header-inf {
+            margin-top: 1vh;
+            display: inline-block;
+            margin-right: 10vw;
+            margin-left: auto;
+            align-content: center;
+        }
+        .header-inf > a {
+            color: rgba(0, 0, 0, 0.49);
+            margin: 0 0.5vw;
+            text-decoration: none;
+        }
+        .header-inf >a:hover {
+            color: black;
+            transition: 0.5s;
+        }
+        .nav-bar {
+            background: #1F343A;
+            height: 4.81vh;
+        }
+        .navs {
+            margin-left: 15vw;
+        }
+        .navs ul {
+            list-style-type: none;
+            margin-bottom: 0;
+        }
+        .navs li {
+            display: inline-block;
+        }
+        .navs a {
+            display: block;
+            text-decoration: none;
+            padding: 1.4vh 1.6vw;
+            color: white;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+        .navs a:hover {
+            color: rgba(255, 255, 255, 0.71);
+        }
+        .imag-show {
+            object-fit: cover;
+            width: 100%;
+            height: 42.6vh;
+        }
+        .image-container {
+            position: relative;
+        }
+        .image-overlay {
+            position: absolute;
+            display: flex;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 15%;
+            background: rgba(31, 52, 58,0.7);
+            align-items: center;
+        }
+        .stitle {
+            margin-left: 300px;
+        }
+        .small-title {
+            color: white;
+            font-size: 30px;
+            font-weight: 1000;
+        }
+        .snav-bar {
+            margin-left: 150px;
+            height: 4.81vh;
+        }
+        .snavs {
+            margin-left: 15vw;
+        }
+        .snavs ul {
+            list-style-type: none;
+            margin-bottom: 0;
+        }
+        .snavs li {
+            display: inline-block;
+        }
+        .snavs a {
+            display: block;
+            text-decoration: none;
+            padding: 1.4vh 1.6vw;
+            color: white;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+        .snavs a:hover {
+            color: rgba(255, 255, 255, 0.71);
+        }
+        .container-introduce {
+            display: flex;
+            flex-direction: column;
+            background-color: #f9fafb;
+        }
+        .now-position {
+            margin-top: 30px;
+            margin-left: 1200px;
+        }
+        .contet-introduce {
+            margin-top: 30px;
+            background-color: rgba(31, 52, 58, 0.71);
+            margin-left: 200px;
+            margin-right: 200px;
+            padding: 30px 50px;
+            border-radius: 22px;
+        }
+        .what-introduce {
+            color: #ffffff;
+        }
+        .footer-me {
+            background-color: #1F343A;
+            text-align: center;
+            height: 100px;
+            margin-top: 150px;
+            padding-top: 20px;
+        }
+        .carousel-item img{
+            width: 150vh;
+            height: 42.6vh;
+        }
+        .all-content {
+            display: flex;
+            flex-wrap: wrap;
+            position: relative;
+        }
+        .a-container {
+            margin-top: 40px;
+            margin-left: 200px;
+            width: 50vw;
+        }
+        .a-item {
+            position: relative;
+            margin-top: 10px;
+        }
+        .a-item a {
+            text-decoration: none;
+            color: black;
+        }
+        .span-item {
+            position: absolute;
+            right: 5px;
+            color: #9C9C9C;
+        }
+        .hot-icon {
+            border: 1px solid red;
+            display: inline-block;
+            margin-right: 5px;
+            font-size: 12px;
+            padding: 2px;
+            color: red;
+        }
+        .link-f {
+            margin-top: 40px;
+            margin-left: 100px;
+        }
+        .calendar {
+            width: 300px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .calendar-weekdays {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .calendar-days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+        }
+        .calendar-days div {
+            padding: 5px;
+            text-align: center;
+            border-radius: 4px;
+        }
+        .day-container {
+            margin-top: 40px;
+            margin-left: 100px;
+        }
+        .day-title {
+            border-bottom: 1px solid #dee2e6;
+            padding-bottom: 10px;
+            color: #3498db;
+        }
+        .day-detail {
+            position: absolute;
+            right:25px;
+            top: 150px;
+            width: 200px;
+            padding: 10px;
+            background: #fff;
+            border: 1px solid #3498db;
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            z-index: 100;
+        }
+        .calendar-container {
+            position: relative;
+            display: flex;
+        }
+        .calendar-day {
+            cursor: default;
+            transition: all 0.2s;
+        }
+        .calendar-day:hover {
+            transform: scale(1.05);
+        }
+        .link-card {
+            background-color: #3498db;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 130px;
+            padding: 10px 5px;
+            height: 100px;
+            margin-left: 15px;
+            margin-top: 15px;
+            border-radius: 14px;
+        }
+        .icon-link {
+            display: block;
+            font-size: 40px;
+        }
+        .container-link {
+            width: 300px;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .container-link a {
+            text-decoration: none;
+        }
+        .a-container a {
+            text-decoration: none;
+            color: black;
+        }
+        .a-container a:hover {
+            color: #3498db;
+        }
+    </style>
+</head>
+<body>
+<div class="container-all">
+    <div class="header-all">
+        <img src="resources/schoolbadge.png">
+        <div class="header-inf">
+            <a href="https://cas.webvpn.nefu.edu.cn/cas/login?service=https%3A%2F%2Fwebvpn.nefu.edu.cn%2Fusers%2Fauth%2Fcas%2Fcallback%3Furl%3Dhttps%253A%252F%252Fwww.nefu.edu.cn%252F">数字东林</a>|
+            <a href="https://mail.nefu.edu.cn/">电子邮件</a>|
+            <a href="https://cas.webvpn.nefu.edu.cn/cas/login?service=https%3A%2F%2Fwebvpn.nefu.edu.cn%2Fusers%2Fauth%2Fcas%2Fcallback%3Furl%3Dhttps%253A%252F%252Fwww.nefu.edu.cn%252F">领导信箱</a>|
+            <a href="https://tel.nefu.edu.cn/">校园电话</a>|
+            <a href="https://map.nefu.edu.cn/">校园地图</a>
+        </div>
+    </div>
+    <div class="nav-bar">
+        <div class="navs">
+            <ul>
+                <li><a href="homepage">首页</a></li>
+                <li><a href="introduce">专业介绍</a></li>
+                <li><a href="lab">实验室</a></li>
+                <li><a href="teacher">教师队伍</a></li>
+                <li><a href="job">就业指南</a></li>
+                <li><a href="newNotice">新闻公告</a></li>
+                <li><a href="contact">联系我们</a></li>
+                <li><a href="manage">后台管理</a></li>
+                <li><a href="filter/login">退出登录</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="image-container">
+        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="https://nefu.gxbys.org.cn/attachment/nefu/linkImage/202506/11/202506111208169281.png" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://nefu.gxbys.org.cn/attachment/nefu/linkImage/202506/06/202506061703146883.png" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://nefu.gxbys.org.cn/attachment/nefu/linkImage/202504/28/202504281730527905.png" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://nefu.gxbys.org.cn/attachment/nefu/linkImage/202501/18/202501181333333583.png" class="d-block w-100" alt="...">
+                </div>
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </a>
+        </div>
+        <div class="image-overlay">
+            <div class="stitle">
+                <span class="small-title">扩展链接</span>
+            </div>
+            <div class="snav-bar">
+                <div class="snavs">
+                    <ul>
+                        <li><a href="https://www.chsi.com.cn/">学职平台<i class="bi bi-arrow-right-circle-fill" style="margin-left: 3px"></i></a></li>
+                        <li><a href="https://gj.ncss.cn/index.html/">国际组织<i class="bi bi-arrow-right-circle-fill" style="margin-left: 3px"></i></a></li>
+                        <li><a href="https://www.newjobs.com.cn/">中国国家人才网<i class="bi bi-arrow-right-circle-fill" style="margin-left: 3px"></i></a></li>
+                        <li><a href="https://www.ncss.cn/">国家大学生就业服务平台<i class="bi bi-arrow-right-circle-fill" style="margin-left: 3px"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="all-content">
+        <div class="a-container">
+            <nav>
+                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                    <a class="nav-link active" id="nav-tz-tab" data-bs-toggle="tab" href="#nav-tz" role="tab" aria-controls="nav-home" aria-selected="true">通知公告</a>
+                    <a class="nav-link" id="nav-dt-tab" data-bs-toggle="tab" href="#nav-dt" role="tab" aria-controls="nav-profile" aria-selected="false">工作动态</a>
+                    <a class="nav-link" id="nav-zc-tab" data-bs-toggle="tab" href="#nav-zc" role="tab" aria-controls="nav-contact" aria-selected="false">政策文件</a>
+                    <a class="nav-link" id="nav-jq-tab" data-bs-toggle="tab" href="#nav-jq" role="tab" aria-controls="nav-contact" aria-selected="false">求职技巧</a>
+                </div>
+            </nav>
+            <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="nav-tz" role="tabpanel" aria-labelledby="nav-home-tab">
+                    <a href="https://nefu.gxbys.org.cn/news/view/aid/156229/tag/tzgg">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i><div class="hot-icon">顶</div>东北林业大学2026届毕业生生源信息（研究生）<span class="span-item fst-italic">2025.06.04</span></div>
+                    </a>
+                    <a href="https://nefu.gxbys.org.cn/news/view/aid/156228/tag/tzgg">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i><div class="hot-icon">顶</div>东北林业大学2026届毕业生生源信息（本科）<span class="span-item fst-italic">2025.06.04</span></div>
+                    </a>
+                    <a href="https://mp.weixin.qq.com/s?__biz=MjM5OTc2NTUxNA==&mid=2650309940&idx=1&sn=42b7680c2b80ad5adabdad951428d3e8&chksm=bee9813394faf5ae2d3fc2888077ab73e66cbfb44674925063bb831c207c433fca14762d25c9&mpshare=1&scene=1&srcid=0116vYxMJxqAgdTiU0cqiEvf&sharer_shareinfo">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i><div class="hot-icon">顶</div>【邀请函】东北林业大学2025届毕业生春季校园招聘活动邀请函<span class="span-item fst-italic">2025.01.17</span></div>
+                    </a>
+                    <a href="https://nefu.gxbys.org.cn/news/view/aid/156448/tag/tzgg">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i><div class="hot-icon">顶</div>【政务实习】东北林业大学第二届暑期政务实习（2025年）的通知（第二批）<span class="span-item fst-italic">2025.06.11</span></div>
+                    </a>
+                    <a href="https://nefu.gxbys.org.cn/news/view/aid/156447/tag/tzgg">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i><div class="hot-icon">顶</div>【政务实习】东北林业大学第二届暑期政务实习（2025年）的通知（第一批）<span class="span-item fst-italic">2025.06.11</span></div>
+                    </a>
+                    <a href="https://nefu.gxbys.org.cn/news/view/aid/156591/tag/tzgg">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>【招才引智】喀什大学2025年高层次人才（团队）引进公告<span class="span-item fst-italic">2025.06.16</span></div>
+                    </a>
+                    <a href="https://nefu.gxbys.org.cn/news/view/aid/156590/tag/tzgg">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>【招才引智】牡丹江医科大学引进博士招聘公告<span class="span-item fst-italic">2025.06.16</span></div>
+                    </a>
+                    <a href="https://nefu.gxbys.org.cn/news/view/aid/156552/tag/tzgg">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>【招才引智】安徽农业大学2025年引进人才<span class="span-item fst-italic">2025.06.13</span></div>
+                    </a>
+                    <a href="https://nefu.gxbys.org.cn/news/view/aid/156551/tag/tzgg">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>【招才引智】安徽农业大学信息与人工智能学院2025年度人才（团队）引进招聘公告<span class="span-item fst-italic">2025.06.13</span></div>
+                    </a>
+                    <a href="https://mp.weixin.qq.com/s/2cpwn9zCSyqLzSLnnrFxjA">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>【招才引智】冰城学子看过来！众多深圳名企携岗赴哈<span class="span-item fst-italic">2025.06.13</span></div>
+                    </a>
+                </div>
+                <div class="tab-pane fade" id="nav-dt" role="tabpanel" aria-labelledby="nav-profile-tab">
+                    <a href="https://news.nefu.edu.cn/info/1011/29756.htm">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>【合作发展】我校与中建二局签订战略合作框架协议<span class="span-item fst-italic">2025.06.13</span></div>
+                    </a>
+                    <a href="https://news.nefu.edu.cn/info/1011/29710.htm">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>【高校动态】学校举行职业发展与就业指导课程教学观摩暨教学大赛颁奖仪式<span class="span-item fst-italic">2025.06.05</span></div>
+                    </a>
+                    <a href="https://mp.weixin.qq.com/s/BsFtUr84hiJ8V5epVIwyQw">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>上海市2025届高校毕业生“百日冲刺”促就业专项行动暨专场招聘会<span class="span-item fst-italic">2025.06.13</span></div>
+                    </a>
+                    <a href="https://news.nefu.edu.cn/info/1011/29702.htm">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>【促就业】李明泽带队赴中国龙江森林工业集团有限公司调研<span class="span-item fst-italic">2025.06.13</span></div>
+                    </a>
+                    <a href="https://news.nefu.edu.cn/info/1011/29660.htm">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>【促就业】学校举办2026届毕业生就业实习暨2025届毕业生春季补招双选会<span class="span-item fst-italic">2025.05.28</span></div>
+                    </a>
+                    <a href="https://news.nefu.edu.cn/info/1011/29607.htm">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>【促就业】学校召开2025届毕业生就业工作推进会<span class="span-item fst-italic">2025.05.20</span></div>
+                    </a>
+                    <a href="https://news.nefu.edu.cn/info/1011/29587.htm">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>【合作发展】我校与鸡西市开启深度合作<span class="span-item fst-italic">2025.05.19</span></div>
+                    </a>
+                    <a href="https://news.nefu.edu.cn/info/1011/29592.htm">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>【合作发展】哈尔滨城市发展投资集团有限公司来我校开展校企合作交流<span class="span-item fst-italic">2025.05.19</span></div>
+                    </a>
+                    <a href="https://news.nefu.edu.cn/info/1014/29514.htm">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>【服务地方】材料科学与工程学院与哈尔滨国营松江胶合板厂有限公司举行产学研合作签约<span class="span-item fst-italic">2025.05.19</span></div>
+                    </a>
+                    <a href="https://news.nefu.edu.cn/info/1014/29598.htm">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>【促就业】金碧物业有限公司来园林学院开展校企合作交流<span class="span-item fst-italic">2025.05.19</span></div>
+                    </a>
+                </div>
+                <div class="tab-pane fade" id="nav-zc" role="tabpanel" aria-labelledby="nav-contact-tab">
+                    <a href="https://nefu.gxbys.org.cn/news/view/aid/156229/tag/tzgg">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i><div class="hot-icon">顶</div>【精准就业】黑龙江省2025年度定向选调优秀大学生毕业公告<span class="span-item fst-italic">2025.06.04</span></div>
+                    </a>
+                    <a href="https://nefu.gxbys.org.cn/news/view/aid/156228/tag/tzgg">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i><div class="hot-icon">顶</div>东北林业大学致全体学生的一封信<span class="span-item fst-italic">2025.06.04</span></div>
+                    </a>
+                    <a href="https://mp.weixin.qq.com/s?__biz=MjM5OTc2NTUxNA==&mid=2650309940&idx=1&sn=42b7680c2b80ad5adabdad951428d3e8&chksm=bee9813394faf5ae2d3fc2888077ab73e66cbfb44674925063bb831c207c433fca14762d25c9&mpshare=1&scene=1&srcid=0116vYxMJxqAgdTiU0cqiEvf&sharer_shareinfo">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i><div class="hot-icon">顶</div>东北林业大学致广大用人单位的一封信<span class="span-item fst-italic">2025.01.17</span></div>
+                    </a>
+                    <a href="https://nefu.gxbys.org.cn/news/view/aid/156448/tag/tzgg">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>【权威发布】教育部部署开展2025届高校毕业生就业“百日冲刺”行动<span class="span-item fst-italic">2025.06.11</span></div>
+                    </a>
+                    <a href="https://nefu.gxbys.org.cn/news/view/aid/156447/tag/tzgg">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>【权威发布】公示！17个新职业，42个新工种亮相<span class="span-item fst-italic">2025.06.11</span></div>
+                    </a>
+                    <a href="https://nefu.gxbys.org.cn/news/view/aid/156591/tag/tzgg">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>【权威发布】人力资源社会保障部关于做好2025年高校毕业生就业工作的通知<span class="span-item fst-italic">2025.06.16</span></div>
+                    </a>
+                    <a href="https://nefu.gxbys.org.cn/news/view/aid/156590/tag/tzgg">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>【权威发布】百万英才汇才粤网络邀请函<span class="span-item fst-italic">2025.06.16</span></div>
+                    </a>
+                    <a href="https://nefu.gxbys.org.cn/news/view/aid/156552/tag/tzgg">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>【权威发布】2025年高校毕业生  就业创业“政策地图”<span class="span-item fst-italic">2025.06.13</span></div>
+                    </a>
+                    <a href="https://nefu.gxbys.org.cn/news/view/aid/156551/tag/tzgg">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>【权威发布】《关于加快构建普通高等学校毕业生高质量就业服务体系的意见》<span class="span-item fst-italic">2025.06.13</span></div>
+                    </a>
+                    <a href="https://mp.weixin.qq.com/s/2cpwn9zCSyqLzSLnnrFxjA">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>【权威发布】中办、国办引发《关于加快构建普通高等学校毕业生高质量就业服务体系的意见》<span class="span-item fst-italic">2025.06.13</span></div>
+                    </a>
+                </div>
+                <div class="tab-pane fade" id="nav-jq" role="tabpanel" aria-labelledby="nav-contact-tab">
+                    <a href="https://news.nefu.edu.cn/info/1011/29756.htm">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>【就业指导】教育部“互联网+就业指导”公益直播课：‌旅游行业发展趋势与职业机会<span class="span-item fst-italic">2025.06.13</span></div>
+                    </a>
+                    <a href="https://news.nefu.edu.cn/info/1011/29710.htm">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>【就业指导】教育部“互联网+就业指导”公益直播课：‌物流行业发展趋势和职业机会<span class="span-item fst-italic">2025.06.05</span></div>
+                    </a>
+                    <a href="https://mp.weixin.qq.com/s/BsFtUr84hiJ8V5epVIwyQw">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>【就业指导】教育部“互联网+就业指导”公益直播课：‌群体面试——从通晓把握到行动优化<span class="span-item fst-italic">2025.06.13</span></div>
+                    </a>
+                    <a href="https://news.nefu.edu.cn/info/1011/29702.htm">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>【就业指导】教育部“互联网+就业指导”公益直播课：‌步步为营找工作——求职中的项目管理<span class="span-item fst-italic">2025.06.13</span></div>
+                    </a>
+                    <a href="https://news.nefu.edu.cn/info/1011/29660.htm">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>【就业指导】教育部“互联网+就业指导”公益直播课：‌用优质简历敲开求职之门<span class="span-item fst-italic">2025.05.28</span></div>
+                    </a>
+                    <a href="https://news.nefu.edu.cn/info/1011/29607.htm">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>【就业指导】国家大学生就业服务平台AI助手：‌智慧小业<span class="span-item fst-italic">2025.05.20</span></div>
+                    </a>
+                    <a href="https://news.nefu.edu.cn/info/1011/29587.htm">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>【就业指导】教育部“互联网+就业指导”公益直播课：‌油气能源行业发展趋势与求职准备<span class="span-item fst-italic">2025.05.19</span></div>
+                    </a>
+                    <a href="https://news.nefu.edu.cn/info/1011/29592.htm">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>【就业指导】教育部“互联网+就业指导”公益直播课：‌唤醒自我，积极应对——就业压力管理与调适<span class="span-item fst-italic">2025.05.19</span></div>
+                    </a>
+                    <a href="https://news.nefu.edu.cn/info/1014/29514.htm">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>【就业指导】教育部“互联网+就业指导”公益直播课：‌读懂招聘需求，强化面试准备<span class="span-item fst-italic">2025.05.19</span></div>
+                    </a>
+                    <a href="https://news.nefu.edu.cn/info/1014/29598.htm">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>【简历门诊】东北林业大学“简历午间门诊Pro”版重磅来袭！<span class="span-item fst-italic">2025.05.19</span></div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="day-container">
+            <h3 class="day-title">就业日历<i class="bi bi-calendar" style="margin-left: 10px"></i></h3>
+            <div class="calendar">
+                <div class="calendar-header">
+                    <button class="prev-month">&lt;</button>
+                    <h4 id="current-month"></h4>
+                    <button class="next-month">&gt;</button>
+                </div>
+                <div class="calendar-weekdays">
+                    <div>日</div>
+                    <div>一</div>
+                    <div>二</div>
+                    <div>三</div>
+                    <div>四</div>
+                    <div>五</div>
+                    <div>六</div>
+                </div>
+                <div class="calendar-days" id="calendar-days"></div>
+            </div>
+        </div>
+        <div class="day-detail"></div>
+        <div class="a-container">
+            <nav>
+                <div class="nav nav-tabs" id="nav-tab2" role="tablist">
+                    <a class="nav-link active" id="nav-zp-tab" data-bs-toggle="tab" href="#nav-zp" role="tab" aria-controls="nav-home" aria-selected="true">招聘公告</a>
+                    <a class="nav-link" id="nav-zph-tab" data-bs-toggle="tab" href="#nav-zph" role="tab" aria-controls="nav-profile" aria-selected="false">招聘会</a>
+                    <a class="nav-link" id="nav-xj-tab" data-bs-toggle="tab" href="#nav-xj" role="tab" aria-controls="nav-contact" aria-selected="false">宣讲会</a>
+                    <a class="nav-link" id="nav-qz-tab" data-bs-toggle="tab" href="#nav-qz" role="tab" aria-controls="nav-contact" aria-selected="false">全职岗位</a>
+                    <a class="nav-link" id="nav-sx-tab" data-bs-toggle="tab" href="#nav-sx" role="tab" aria-controls="nav-contact" aria-selected="false">实习岗位</a>
+
+                </div>
+            </nav>
+            <div class="tab-content" id="nav-tabContent2">
+                <div class="tab-pane fade show active" id="nav-zp" role="tabpanel" aria-labelledby="nav-home-tab">
+                    <a href="https://news.nefu.edu.cn/info/1011/29756.htm">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>宁夏绿丰源工程咨询有限公司<span class="span-item fst-italic">2025.06.13</span></div>
+                    </a>
+                    <a href="https://news.nefu.edu.cn/info/1011/29710.htm">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>长沙银行2025年暑期实习生招聘启事<span class="span-item fst-italic">2025.06.05</span></div>
+                    </a>
+                    <a href="https://mp.weixin.qq.com/s/BsFtUr84hiJ8V5epVIwyQw">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>一汽(大连)通商有限公司<span class="span-item fst-italic">2025.06.13</span></div>
+                    </a>
+                    <a href="https://news.nefu.edu.cn/info/1011/29702.htm">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>青岛博益特生物材料股份有限公司招聘<span class="span-item fst-italic">2025.06.13</span></div>
+                    </a>
+                    <a href="https://news.nefu.edu.cn/info/1011/29660.htm">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>中国建设银行浙江省分行2025年度“建习生”暑期实习生<span class="span-item fst-italic">2025.05.28</span></div>
+                    </a>
+                    <a href="https://news.nefu.edu.cn/info/1011/29607.htm">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>山东世纪阳光纸业集团有限公司2025届校园招聘<span class="span-item fst-italic">2025.05.20</span></div>
+                    </a>
+                    <a href="https://news.nefu.edu.cn/info/1011/29587.htm">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>江谷生物2025届校园招聘简章<span class="span-item fst-italic">2025.05.19</span></div>
+                    </a>
+                    <a href="https://news.nefu.edu.cn/info/1011/29592.htm">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>辽宁省农业科学院2025年赴高校公开招聘工作人员公告(第二批)<span class="span-item fst-italic">2025.05.19</span></div>
+                    </a>
+                    <a href="https://news.nefu.edu.cn/info/1014/29514.htm">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>新东方江苏省域2026届秋季校园招聘简章<span class="span-item fst-italic">2025.05.19</span></div>
+                    </a>
+                    <a href="https://news.nefu.edu.cn/info/1014/29598.htm">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>中国烟草总公司福建省公司<span class="span-item fst-italic">2025.05.19</span></div>
+                    </a>
+                </div>
+                <div class="tab-pane fade" id="nav-zph" role="tabpanel" aria-labelledby="nav-profile-tab">
+                    <a href="https://news.nefu.edu.cn/info/1011/29756.htm">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>【线下招聘会】“百日冲刺”--奥林楼001室毕业生招聘厅<span class="span-item fst-italic">2025.06.13</span></div>
+                    </a>
+                    <a href="https://news.nefu.edu.cn/info/1011/29710.htm">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>【就业直通车】“乐居鹏城 筑梦未来”哈尔滨市友谊宫金色大厅<span class="span-item fst-italic">2025.06.05</span></div>
+                    </a>
+                    <a href="https://mp.weixin.qq.com/s/BsFtUr84hiJ8V5epVIwyQw">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>【线下招聘会】“百日冲刺”奥林楼001室毕业生招聘厅<span class="span-item fst-italic">2025.06.13</span></div>
+                    </a>
+                    <a href="https://news.nefu.edu.cn/info/1011/29702.htm">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>【就业直通车】“沈阳未来，因你而来” 辽宁省沈阳市<span class="span-item fst-italic">2025.06.13</span></div>
+                    </a>
+                    <a href="https://news.nefu.edu.cn/info/1011/29660.htm">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>【就业直通车】“百万人才汇南粤 ”黑龙江大学大学生活动中心四楼建港先锋厅<span class="span-item fst-italic">2025.05.28</span></div>
+                    </a>
+                    <a href="https://news.nefu.edu.cn/info/1011/29607.htm">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>【就业直通车】2025年“工会帮就业”哈西万达广场<span class="span-item fst-italic">2025.05.20</span></div>
+                    </a>
+                    <a href="https://news.nefu.edu.cn/info/1011/29587.htm">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>【就业直通车】2025连云港市“高校求贤季” 黑龙江大学南岗校区体育馆<span class="span-item fst-italic">2025.05.19</span></div>
+                    </a>
+                    <a href="https://news.nefu.edu.cn/info/1011/29592.htm">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>【就业直通车】2025吉林市“组团引才”宣讲 哈尔滨工业大学一校区活动中心<span class="span-item fst-italic">2025.05.19</span></div>
+                    </a>
+                    <a href="https://news.nefu.edu.cn/info/1014/29514.htm">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>【就业直通车】2025哈尔滨“丁香人才周” 哈尔滨工业大学一校区体育馆<span class="span-item fst-italic">2025.05.19</span></div>
+                    </a>
+                    <a href="https://news.nefu.edu.cn/info/1014/29598.htm">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>【线下招聘会】“服务龙江·丁香聚才”奥林楼001室毕业生招聘厅<span class="span-item fst-italic">2025.05.19</span></div>
+                    </a>
+                </div>
+                <div class="tab-pane fade" id="nav-xj" role="tabpanel" aria-labelledby="nav-contact-tab">
+                    <a href="https://news.nefu.edu.cn/info/1011/29756.htm">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>中国人民解放军陆军工程大学--丹青216<span class="span-item fst-italic">2025.06.13</span></div>
+                    </a>
+                    <a href="https://news.nefu.edu.cn/info/1011/29710.htm">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>新东方江苏省域26届校招提前批--线上宣讲<span class="span-item fst-italic">2025.06.05</span></div>
+                    </a>
+                    <a href="https://mp.weixin.qq.com/s/BsFtUr84hiJ8V5epVIwyQw">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>北京京东世纪贸易有限公司--奥林楼004<span class="span-item fst-italic">2025.06.13</span></div>
+                    </a>
+                    <a href="https://news.nefu.edu.cn/info/1011/29702.htm">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>华勤技术2025年暑期实习招聘青苗--线上宣讲<span class="span-item fst-italic">2025.06.13</span></div>
+                    </a>
+                    <a href="https://news.nefu.edu.cn/info/1011/29660.htm">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>宁波凯越国际贸易有限公司--丹青楼220<span class="span-item fst-italic">2025.05.28</span></div>
+                    </a>
+                    <a href="https://news.nefu.edu.cn/info/1011/29607.htm">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>保定市2025大学生农业职业经理人招聘--奥林楼007<span class="span-item fst-italic">2025.05.20</span></div>
+                    </a>
+                    <a href="https://news.nefu.edu.cn/info/1011/29587.htm">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>中铁十四局集团有限公司2025届--奥林楼004<span class="span-item fst-italic">2025.05.19</span></div>
+                    </a>
+                    <a href="https://news.nefu.edu.cn/info/1011/29592.htm">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>中建装饰海南有限公司--丹青楼216<span class="span-item fst-italic">2025.05.19</span></div>
+                    </a>
+                    <a href="https://news.nefu.edu.cn/info/1014/29514.htm">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>粤港澳大湾区·江门国家高新区--奥林楼006<span class="span-item fst-italic">2025.05.19</span></div>
+                    </a>
+                    <a href="https://news.nefu.edu.cn/info/1014/29598.htm">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>辽宁省营口市“访校送岗助振兴”专项--奥林楼007<span class="span-item fst-italic">2025.05.19</span></div>
+                    </a>
+                </div>
+                <div class="tab-pane fade" id="nav-qz" role="tabpanel" aria-labelledby="nav-contact-tab">
+                    <a href="https://news.nefu.edu.cn/info/1011/29756.htm">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>合成助理  ---广东江谷生物材料科技有限公司<span class="span-item fst-italic">2025.06.13</span></div>
+                    </a>
+                    <a href="https://news.nefu.edu.cn/info/1011/29710.htm">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>支教老师 ---北京立德未来助学公益基金会<span class="span-item fst-italic">2025.06.05</span></div>
+                    </a>
+                    <a href="https://mp.weixin.qq.com/s/BsFtUr84hiJ8V5epVIwyQw">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>直播主播 ---北京中公教育科技有限公司<span class="span-item fst-italic">2025.06.13</span></div>
+                    </a>
+                    <a href="https://news.nefu.edu.cn/info/1011/29702.htm">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>电梯检验员 ---苏州陆汇信息科技集团有限公司<span class="span-item fst-italic">2025.06.13</span></div>
+                    </a>
+                    <a href="https://news.nefu.edu.cn/info/1011/29660.htm">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>配方应用助理 ---广东江谷生物材料科技有限公司<span class="span-item fst-italic">2025.05.28</span></div>
+                    </a>
+                    <a href="https://news.nefu.edu.cn/info/1011/29607.htm">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>销售助理 ---广东江谷生物材料科技有限公司<span class="span-item fst-italic">2025.05.20</span></div>
+                    </a>
+                    <a href="https://news.nefu.edu.cn/info/1011/29587.htm">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>纪检合规岗 ---中华联合财产保险股份有限公司<span class="span-item fst-italic">2025.05.19</span></div>
+                    </a>
+                    <a href="https://news.nefu.edu.cn/info/1011/29592.htm">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>信息运维岗 ---中华联合财产保险股份有限公司<span class="span-item fst-italic">2025.05.19</span></div>
+                    </a>
+                    <a href="https://news.nefu.edu.cn/info/1014/29514.htm">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>农险承保管理岗 ---中华联合财产保险股份有限公司<span class="span-item fst-italic">2025.05.19</span></div>
+                    </a>
+                    <a href="https://news.nefu.edu.cn/info/1014/29598.htm">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>人力资源岗 ---中华联合财产保险股份有限公司<span class="span-item fst-italic">2025.05.19</span></div>
+                    </a>
+                </div>
+                <div class="tab-pane fade" id="nav-sx" role="tabpanel" aria-labelledby="nav-contact-tab">
+                    <a href="https://news.nefu.edu.cn/info/1011/29756.htm">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>中共合伙人  ---北京中公教育科技有限公司<span class="span-item fst-italic">2025.06.13</span></div>
+                    </a>
+                    <a href="https://news.nefu.edu.cn/info/1011/29710.htm">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>“梦工场”招商银行长沙分行 ---招商银行股份有限公司长沙分行<span class="span-item fst-italic">2025.06.05</span></div>
+                    </a>
+                    <a href="https://mp.weixin.qq.com/s/BsFtUr84hiJ8V5epVIwyQw">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>销售助理 ---广东江谷生物材料科技有限公司<span class="span-item fst-italic">2025.06.13</span></div>
+                    </a>
+                    <a href="https://news.nefu.edu.cn/info/1011/29702.htm">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>房地产销售实习生 ---黑龙江汇龙房地产开发有限责任公司<span class="span-item fst-italic">2025.06.13</span></div>
+                    </a>
+                    <a href="https://news.nefu.edu.cn/info/1011/29660.htm">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>分支行实习生 ---长沙银行股份有限公司<span class="span-item fst-italic">2025.05.28</span></div>
+                    </a>
+                    <a href="https://news.nefu.edu.cn/info/1011/29607.htm">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>>英语产品经理 ---上海众世科信息技术有限公司<span class="span-item fst-italic">2025.05.20</span></div>
+                    </a>
+                    <a href="https://news.nefu.edu.cn/info/1011/29587.htm">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>日语产品经理 ---上海众世科信息技术有限公司<span class="span-item fst-italic">2025.05.19</span></div>
+                    </a>
+                    <a href="https://news.nefu.edu.cn/info/1011/29592.htm">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>设计实习生 ---左尚明舍家居用品(上海)有限公司<span class="span-item fst-italic">2025.05.19</span></div>
+                    </a>
+                    <a href="https://news.nefu.edu.cn/info/1014/29514.htm">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>营销实习生 ---左尚明舍家居用品(上海)有限公司<span class="span-item fst-italic">2025.05.19</span></div>
+                    </a>
+                    <a href="https://news.nefu.edu.cn/info/1014/29598.htm">
+                        <div class="a-item"><i class="bi bi-chevron-right" style="margin-right: 5px"></i>暑假实习生(课程顾问) ---郑州高途云集教育科技有限公司<span class="span-item fst-italic">2025.05.19</span></div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="link-f">
+            <h3 class="day-title">快捷链接<i class="bi bi-link" style="margin-left: 10px"></i></h3>
+            <div class="container-link">
+                <a href="https://nefu.gxbys.org.cn/jobtest">
+                    <div class="link-card">
+                        <i class="bi bi-clipboard2-check icon-link" ></i>
+                        <p>职业测评</p>
+                    </div>
+                </a>
+                <a href="https://nefu.gxbys.org.cn/consult">
+                    <div class="link-card">
+                        <i class="bi bi-clipboard2-check icon-link" ></i>
+                        <p>咨询预约</p>
+                    </div>
+                </a>
+                <a href="https://nefu.gxbys.org.cn/inquiry">
+                    <div class="link-card">
+                        <i class="bi bi-clipboard2-check icon-link" ></i>
+                        <p>就业调查</p>
+                    </div>
+                </a>
+                <a href="https://nefu-market.gxbys.org.cn/index.html#/">
+                    <div class="link-card">
+                        <i class="bi bi-clipboard2-check icon-link" ></i>
+                        <p>就业超市</p>
+                    </div>
+                </a>
+                <a href="https://nefu.gxbys.org.cn/user/login?referer=/default/affair/module/sinfo">
+                    <div class="link-card">
+                        <i class="bi bi-clipboard2-check icon-link" ></i>
+                        <p>生源信息核对</p>
+                    </div>
+                </a>
+                <a href="https://nefu.gxbys.org.cn/user/login?referer=/default/affair/module/ninfo">
+                    <div class="link-card">
+                        <i class="bi bi-clipboard2-check icon-link" ></i>
+                        <p>签约及解约中心</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="footer-me">
+        <p style="color: #eeeeee;margin-top: 25px" >地址‌：黑龙江省哈尔滨市香坊区和兴路26号<span style="margin-left: 45px">邮编‌：150040</span><span style="margin-left: 45px"> 信息公开工作办公室：0451-82191631（咨询时间：工作日8:30-11:30、14:00-17:00，节假日除外）</span></p>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<script>
+
+    const currentMonthElement = document.getElementById('current-month');
+    const calendarDaysElement = document.getElementById('calendar-days');
+    const prevMonthButton = document.querySelector('.prev-month');
+    const nextMonthButton = document.querySelector('.next-month');
+    const dayDetailElement = document.querySelector('.day-detail');
+
+    // 特殊日期数据存储
+    const specialDates = {
+        '6-6': {
+            backgroundColor: '#3498db',
+            detail: '六月六日：华勤技术2025年暑期实习招聘-青苗实习专场<br>时间：14:00-16:00<br>地点：空中宣讲会线上宣讲'
+        },
+        '6-11': {
+            backgroundColor: '#3498db',
+            detail: '六月十一日：北京京东世纪贸易有限公司<br>时间：19:00-20:00<br>地点：奥林楼004'
+        },
+        '6-13': {
+            backgroundColor: '#3498db',
+            detail: '六月十三日：新东方江苏省域26届校招提前批空宣6月13日晚19:00正式启动！'
+        },
+        '6-15': {
+            backgroundColor: '#3498db',
+            detail: '六月十五日：【就业直通车】“乐居鹏城 筑梦未来”2025年湾区安居与创新人才发展主题活动已举办<br>时间：09:00-17:00<br>地点: 哈尔滨市友谊宫金色大厅'
+        },
+        '6-17': {
+            backgroundColor: '#3498db',
+            detail: '六月十七日：中国人民解放军陆军工程大学<br>时间：10:00-11:00<br>地点：丹青216'
+        },
+        '6-20': {
+            backgroundColor: '#3498db',
+            detail: '六月二十日：2026届毕业生就业实习双选会暨2025届毕业生春季补招双选会（第二场）<br>时间：09:00-11:30<br>地点：奥林楼001'
+        }
+    };
+
+    let currentDate = new Date();
+
+    function renderCalendar() {
+        const year = currentDate.getFullYear();
+        const month = currentDate.getMonth();
+
+        currentMonthElement.textContent = `${year}年 ${month + 1}月`;
+        dayDetailElement.style.display = 'none';
+
+        const firstDay = new Date(year, month, 1);
+        const lastDay = new Date(year, month + 1, 0);
+
+        const daysInMonth = lastDay.getDate();
+        const startingDayOfWeek = firstDay.getDay();
+
+        calendarDaysElement.innerHTML = '';
+
+        for (let i = 0; i < startingDayOfWeek; i++) {
+            const emptyDiv = document.createElement('div');
+            calendarDaysElement.appendChild(emptyDiv);
+        }
+
+        for (let day = 1; day <= daysInMonth; day++) {
+            const dayDiv = document.createElement('div');
+            dayDiv.textContent = day;
+            dayDiv.classList.add('calendar-day');
+
+            const dateKey = `${month + 1}-${day}`;
+            if (specialDates[dateKey]) {
+                dayDiv.style.backgroundColor = specialDates[dateKey].backgroundColor;
+
+                // 添加悬浮事件
+                dayDiv.addEventListener('mouseenter', () => {
+                    dayDetailElement.innerHTML = specialDates[dateKey].detail;
+                    dayDetailElement.style.display = 'block';
+                });
+
+                dayDiv.addEventListener('mouseleave', () => {
+                    dayDetailElement.style.display = 'none';
+                });
+            }
+
+            calendarDaysElement.appendChild(dayDiv);
+        }
+    }
+
+    prevMonthButton.addEventListener('click', () => {
+        currentDate.setMonth(currentDate.getMonth() - 1);
+        renderCalendar();
+    });
+
+    nextMonthButton.addEventListener('click', () => {
+        currentDate.setMonth(currentDate.getMonth() + 1);
+        renderCalendar();
+    });
+
+    renderCalendar();
+</script>
+</body>
+</html>

@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>教师详情</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.2/dist/echarts.min.js"></script>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        .container-all {
+            width: 100%;
+            height: 100%;
+            /*background: green;*/
+            background-color: #f9fafb;
+        }
+        .header-all {
+            display: flex;
+            height: 6.67vh;
+            background-color: #f9fafb;
+            width: 100%;
+        }
+        .header-all > img {
+            margin-top: 1vh;
+            margin-left: 15vw;
+        }
+        .header-inf {
+            margin-top: 1vh;
+            display: inline-block;
+            margin-right: 10vw;
+            margin-left: auto;
+            align-content: center;
+        }
+        .header-inf > a {
+            color: rgba(0, 0, 0, 0.49);
+            margin: 0 0.5vw;
+            text-decoration: none;
+        }
+        .header-inf >a:hover {
+            color: black;
+            transition: 0.5s;
+        }
+        .header {
+            height: 72px;
+            background-color: #1F343A;
+            color: white;
+            font-size: larger;
+            font-weight: bolder;
+            align-content: center;
+        }
+        .header h2 {
+            text-align: center;
+        }
+
+        .container-detail {
+            display: flex;
+            max-width: 1420px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: #f8f9fa;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            gap: 3rem;
+        }
+
+        .image-detail img {
+            width: 700px;
+            height: 600px;
+            object-fit: cover;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .image-detail img:hover {
+            transform: scale(1.02);
+        }
+
+        .detail-lab {
+            flex: 1;
+            padding: 1.5rem;
+        }
+
+        .detail-lab p {
+            margin: 2rem 0;
+            padding: 1rem 1rem;
+            background: white;
+            border-left: 4px solid #4285f4;
+            border-radius: 0 8px 8px 0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            font-size: 1.1rem;
+        }
+
+        .detail-s {
+            color: #4285f4;
+            font-weight: bold;
+        }
+        .footer-me {
+            background-color: #1F343A;
+            text-align: center;
+            height: 100px;
+            margin-top: 102px;
+            padding-top: 20px;
+        }
+        .back-n {
+            margin-top: 40px;
+            margin-left:40px;
+            border: 2px solid black;
+            color: black;
+            border-radius: 4px;
+            width: 80px;
+            font-weight: bolder;
+            font-size: 20px;
+        }
+        .back-n:hover {
+            background-color: white;
+            color: #4285f4;
+            border: 2px solid #4285f4;
+        }
+    </style>
+</head>
+<body>
+<div class="container-all">
+    <div class="header-all">
+        <img src="resources/schoolbadge.png">
+        <div class="header-inf">
+            <a href="">数字东林</a>|
+            <a href="">电子邮件</a>|
+            <a href="">领导信箱</a>|
+            <a href="">校园电话</a>|
+            <a href="">校园地图</a>
+        </div>
+    </div>
+    <div class="header">
+        <h2 id="headerDetail"></h2>
+    </div>
+    <button type="button" class="btn btn-outline-secondary back-n" onclick="window.location.href='teacher';">返回</button>
+    <div class="container-detail">
+        <div class="image-detail">
+            <img id="detailImage" alt="">
+        </div>
+        <div id="teacherInfo" class="detail-lab">
+        </div>
+    </div>
+    <div class="footer-me">
+        <p style="color: #eeeeee;margin-top: 25px" >地址‌：黑龙江省哈尔滨市香坊区和兴路26号<span style="margin-left: 45px">邮编‌：150040</span><span style="margin-left: 45px"> 信息公开工作办公室：0451-82191631（咨询时间：工作日8:30-11:30、14:00-17:00，节假日除外）</span></p>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+<script>
+    // 获取 URL 参数
+    const urlParams = new URLSearchParams(window.location.search);
+    const teacherId = parseInt(urlParams.get('teacherId'), 10);
+
+
+    const teacherData = [
+        // 大数据专业 - 教授
+        {
+            id: 1,
+            major: '大数据',
+            name: '王思迪',
+            title: '教授',
+            teacherImage: 'https://img0.baidu.com/it/u=2270665565,410154021&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=800',
+            detail: '王思迪教授是大数据领域的杰出专家，拥有多年的教学和科研经验。他毕业于国内顶尖高校，获得计算机科学博士学位。在大数据存储、处理和分析方面有着深厚的造诣，发表过多篇高质量的学术论文，其中多篇被SCI收录。他主持过多个国家级科研项目，为行业的发展做出了重要贡献。在教学上，他注重培养学生的实践能力和创新思维，所指导的学生多次在国内外大数据竞赛中获奖。他的课程深入浅出，深受学生们的喜爱和尊敬。'
+        },
+        {
+            id: 2,
+            major: '大数据',
+            name: '王波',
+            title: '教授',
+            teacherImage: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fsafe-img.xhscdn.com%2Fbw1%2F0b7baebd-7c4e-4d67-bab5-29e31d47a083%3FimageView2%2F2%2Fw%2F1080%2Fformat%2Fjpg&refer=http%3A%2F%2Fsafe-img.xhscdn.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1752569000&t=84ac95d82458cdc8854ebecb917b3289',
+            detail: '王波教授专注于大数据挖掘和机器学习方向的研究。他在国际知名学术期刊上发表了一系列有影响力的论文，提出了多种创新的数据挖掘算法。她积极参与产学研合作项目，与多家知名企业建立了良好的合作关系，将研究成果应用于实际生产中，取得了显著的经济效益。在教学过程中，她善于引导学生参与科研项目，培养学生的科研能力和团队协作精神。他的学生毕业后大多进入了知名企业或继续深造，在各自的领域取得了优异的成绩。'
+        },
+        // 大数据专业 - 副教授
+        {
+            id: 3,
+            major: '大数据',
+            name: '王浩然',
+            title: '副教授',
+            teacherImage: 'resources/teacher.jpg',
+            detail: '王浩然副教授在大数据分析和可视化方面有着丰富的经验。他参与编写了多本大数据相关的教材，为大数据领域的教育事业做出了重要贡献。他的研究方向主要包括数据可视化技术、实时数据分析等。在教学中，他注重理论与实践相结合，通过大量的案例分析和实际项目，让学生更好地掌握大数据分析的方法和技巧。他还积极组织学生参加各类大数据竞赛，提高学生的实践能力和竞争力。'
+        },
+        {
+            id: 4,
+            major: '大数据',
+            name: '赵思涵',
+            title: '副教授',
+            teacherImage: 'resources/teacher.jpg',
+            detail: '赵思涵副教授致力于大数据安全和隐私保护的研究。她在相关领域发表了多篇高质量的学术论文，提出了多种有效的数据安全保护策略。她参与了多个国家级和省部级科研项目，为大数据的安全应用提供了重要的理论支持和技术保障。在教学方面，她注重培养学生的安全意识和责任感，通过实际案例让学生了解大数据安全的重要性。她的教学方法生动有趣，深受学生们的欢迎。'
+        },
+        // 大数据专业 - 讲师
+        {
+            id: 5,
+            major: '大数据',
+            name: '孙逸凡',
+            title: '讲师',
+            teacherImage: 'resources/teacher.jpg',
+            detail: '孙逸凡讲师主要负责大数据基础课程的教学工作。他毕业于国内知名高校，拥有扎实的专业知识和丰富的教学经验。他注重培养学生的编程能力和数据处理能力，通过大量的实验和项目让学生掌握大数据的基本原理和方法。他还积极参与学术研究，关注大数据领域的最新发展动态，将前沿知识融入到教学中，使学生能够接触到最新的技术和理念。'
+        },
+        {
+            id: 6,
+            major: '大数据',
+            name: '周雨泽',
+            title: '讲师',
+            teacherImage: 'resources/teacher.jpg',
+            detail: '周雨泽讲师专注于大数据算法和模型优化的研究。他在相关领域发表了多篇学术论文，提出了多种优化算法，提高了大数据处理的效率和准确性。在教学中，他注重培养学生的算法设计和分析能力，通过实际案例让学生掌握算法的设计思想和实现方法。他还鼓励学生参与科研项目，培养学生的创新能力和实践能力。'
+        },
+        // 计算机科学与技术专业 - 教授
+        {
+            id: 7,
+            major: '计算机科学与技术',
+            name: '陈宇凡',
+            title: '教授',
+            teacherImage: 'resources/teacher.jpg',
+            detail: '陈宇凡教授是计算机科学与技术领域的资深专家，在人工智能、计算机网络等方向有着深入的研究。他主持过多个国家级重点科研项目，取得了多项重要的科研成果。他在国际知名学术期刊上发表了大量的学术论文，其中多篇被引用次数较高。在教学上，他注重培养学生的创新能力和解决实际问题的能力，通过引导学生参与科研项目，让学生在实践中锻炼自己。他的教学风格严谨认真，深受学生们的尊敬。'
+        },
+        {
+            id: 8,
+            major: '计算机科学与技术',
+            name: '林诗涵',
+            title: '教授',
+            teacherImage: 'resources/teacher.jpg',
+            detail: '林诗涵教授专注于计算机体系结构和并行计算的研究。她在相关领域发表了一系列有影响力的学术论文，提出了多种创新的并行计算模型。她积极参与国际学术交流活动，与国内外知名学者保持着密切的合作关系。在教学过程中，她注重培养学生的计算机系统设计和优化能力，通过实际项目让学生掌握计算机体系结构的原理和方法。她的教学方法灵活多样，能够激发学生的学习兴趣。'
+        },
+        // 计算机科学与技术专业 - 副教授
+        {
+            id: 9,
+            major: '计算机科学与技术',
+            name: '胡俊辉',
+            title: '副教授',
+            teacherImage: 'resources/teacher.jpg',
+            detail: '胡俊辉副教授在计算机图形学和虚拟现实方面有着丰富的经验。他参与编写了多本相关教材，为计算机科学与技术领域的教育事业做出了重要贡献。他的研究方向主要包括图形算法、虚拟场景建模等。在教学中，他注重理论与实践相结合，通过大量的案例分析和实际项目，让学生更好地掌握计算机图形学和虚拟现实的技术和应用。他还积极组织学生参加各类竞赛，提高学生的实践能力和创新能力。'
+        },
+        {
+            id: 10,
+            major: '计算机科学与技术',
+            name: '徐雅琴',
+            title: '副教授',
+            teacherImage: 'resources/teacher.jpg',
+            detail: '徐雅琴副教授致力于计算机网络安全和数据隐私保护的研究。她在相关领域发表了多篇高质量的学术论文，提出了多种有效的网络安全防护策略。她参与了多个国家级和省部级科研项目，为计算机网络的安全运行提供了重要的理论支持和技术保障。在教学方面，她注重培养学生的安全意识和责任感，通过实际案例让学生了解计算机网络安全的重要性。她的教学方法生动有趣，深受学生们的欢迎。'
+        },
+        // 计算机科学与技术专业 - 讲师
+        {
+            id: 11,
+            major: '计算机科学与技术',
+            name: '郭宇航',
+            title: '讲师',
+            teacherImage: 'resources/teacher.jpg',
+            detail: '郭宇航讲师主要负责计算机基础课程的教学工作。他毕业于国内知名高校，拥有扎实的专业知识和丰富的教学经验。他注重培养学生的编程能力和算法设计能力，通过大量的实验和项目让学生掌握计算机科学与技术的基本原理和方法。他还积极参与学术研究，关注计算机领域的最新发展动态，将前沿知识融入到教学中，使学生能够接触到最新的技术和理念。'
+        },
+        {
+            id: 12,
+            major: '计算机科学与技术',
+            name: '唐心怡',
+            title: '讲师',
+            teacherImage: 'resources/teacher.jpg',
+            detail: '唐心怡讲师专注于人工智能算法和机器学习的研究。她在相关领域发表了多篇学术论文，提出了多种优化算法，提高了人工智能模型的性能和效率。在教学中，她注重培养学生的算法设计和分析能力，通过实际案例让学生掌握人工智能算法的设计思想和实现方法。她还鼓励学生参与科研项目，培养学生的创新能力和实践能力。'
+        },
+        // 软件工程专业 - 教授
+        {
+            id: 13,
+            major: '软件工程',
+            name: '吴俊豪',
+            title: '教授',
+            teacherImage: 'resources/teacher.jpg',
+            detail: '吴俊豪教授是软件工程领域的知名专家，在软件体系结构、软件开发方法等方面有着深入的研究。他主持过多个国家级科研项目，取得了多项重要的科研成果。他在国际知名学术期刊上发表了大量的学术论文，其中多篇被引用次数较高。在教学上，他注重培养学生的软件工程实践能力和团队协作精神，通过引导学生参与实际软件开发项目，让学生在实践中锻炼自己。他的教学风格严谨认真，深受学生们的尊敬。'
+        },
+        {
+            id: 14,
+            major: '软件工程',
+            name: '刘思瑶',
+            title: '教授',
+            teacherImage: 'resources/teacher.jpg',
+            detail: '刘思瑶教授专注于软件测试和质量保证的研究。她在相关领域发表了一系列有影响力的学术论文，提出了多种创新的软件测试方法和质量评估模型。她积极参与国际学术交流活动，与国内外知名学者保持着密切的合作关系。在教学过程中，她注重培养学生的软件测试和质量控制能力，通过实际项目让学生掌握软件测试的原理和方法。她的教学方法灵活多样，能够激发学生的学习兴趣。'
+        },
+        // 软件工程专业 - 副教授
+        {
+            id: 15,
+            major: '软件工程',
+            name: '黄梓豪',
+            title: '副教授',
+            teacherImage: 'https://wx1.sinaimg.cn/large/007YuppIly4ge4macz4x2j30b60b6dfs.jpg',
+            detail: '黄梓豪副教授在软件工程管理和项目开发方面有着丰富的经验。他参与编写了多本相关教材，为软件工程领域的教育事业做出了重要贡献。他的研究方向主要包括软件项目管理、敏捷开发方法等。在教学中，他注重理论与实践相结合，通过大量的案例分析和实际项目，让学生更好地掌握软件工程管理的技术和应用。他还积极组织学生参加各类软件开发竞赛，提高学生的实践能力和创新能力。'
+        },
+        {
+            id: 16,
+            major: '软件工程',
+            name: '郑雨薇',
+            title: '副教授',
+            teacherImage: 'resources/teacher.jpg',
+            detail: '郑雨薇副教授致力于软件安全和漏洞修复的研究。她在相关领域发表了多篇高质量的学术论文，提出了多种有效的软件安全防护策略。她参与了多个国家级和省部级科研项目，为软件系统的安全运行提供了重要的理论支持和技术保障。在教学方面，她注重培养学生的安全意识和责任感，通过实际案例让学生了解软件安全的重要性。她的教学方法生动有趣，深受学生们的欢迎。'
+        },
+        // 软件工程专业 - 讲师
+        {
+            id: 17,
+            major: '软件工程',
+            name: '何逸凡',
+            title: '讲师',
+            teacherImage: 'resources/teacher.jpg',
+            detail: '何逸凡讲师主要负责软件工程基础课程的教学工作。他毕业于国内知名高校，拥有扎实的专业知识和丰富的教学经验。他注重培养学生的编程能力和软件开发能力，通过大量的实验和项目让学生掌握软件工程的基本原理和方法。他还积极参与学术研究，关注软件工程领域的最新发展动态，将前沿知识融入到教学中，使学生能够接触到最新的技术和理念。'
+        },
+        {
+            id: 18,
+            major: '软件工程',
+            name: '罗雨泽',
+            title: '讲师',
+            teacherImage: 'resources/teacher.jpg',
+            detail: '罗雨泽讲师专注于软件架构设计和优化的研究。他在相关领域发表了多篇学术论文，提出了多种优化算法，提高了软件系统的性能和可扩展性。在教学中，他注重培养学生的软件架构设计和分析能力，通过实际案例让学生掌握软件架构设计的思想和方法。他还鼓励学生参与科研项目，培养学生的创新能力和实践能力。'
+        },
+        // 人工智能专业 - 教授
+        {
+            id: 19,
+            major: '人工智能',
+            name: '朱宇凡',
+            title: '教授',
+            teacherImage: 'resources/teacher.jpg',
+            detail: '朱宇凡教授是人工智能领域的资深专家，在深度学习、自然语言处理等方向有着深入的研究。他主持过多个国家级重点科研项目，取得了多项重要的科研成果。他在国际知名学术期刊上发表了大量的学术论文，其中多篇被引用次数较高。在教学上，他注重培养学生的创新能力和解决实际问题的能力，通过引导学生参与科研项目，让学生在实践中锻炼自己。他的教学风格严谨认真，深受学生们的尊敬。'
+        },
+        {
+            id: 20,
+            major: '人工智能',
+            name: '许诗涵',
+            title: '教授',
+            teacherImage: 'resources/teacher.jpg',
+            detail: '许诗涵教授专注于计算机视觉和模式识别的研究。她在相关领域发表了一系列有影响力的学术论文，提出了多种创新的计算机视觉算法。她积极参与国际学术交流活动，与国内外知名学者保持着密切的合作关系。在教学过程中，她注重培养学生的计算机视觉和模式识别能力，通过实际项目让学生掌握计算机视觉的原理和方法。她的教学方法灵活多样，能够激发学生的学习兴趣。'
+        },
+        // 人工智能专业 - 副教授
+        {
+            id: 21,
+            major: '人工智能',
+            name: '余俊辉',
+            title: '副教授',
+            teacherImage: 'resources/teacher.jpg',
+            detail: '余俊辉副教授在人工智能算法和机器人控制方面有着丰富的经验。他参与编写了多本相关教材，为人工智能领域的教育事业做出了重要贡献。他的研究方向主要包括强化学习算法、机器人路径规划等。在教学中，他注重理论与实践相结合，通过大量的案例分析和实际项目，让学生更好地掌握人工智能算法的技术和应用。他还积极组织学生参加各类机器人竞赛，提高学生的实践能力和创新能力。'
+        },
+        {
+            id: 22,
+            major: '人工智能',
+            name: '林雅琴',
+            title: '副教授',
+            teacherImage: 'resources/teacher.jpg',
+            detail: '林雅琴副教授致力于人工智能伦理和安全的研究。她在相关领域发表了多篇高质量的学术论文，提出了多种有效的人工智能伦理规范和安全防护策略。她参与了多个国家级和省部级科研项目，为人工智能的安全发展提供了重要的理论支持和技术保障。在教学方面，她注重培养学生的伦理意识和责任感，通过实际案例让学生了解人工智能伦理和安全的重要性。她的教学方法生动有趣，深受学生们的欢迎。'
+        },
+        // 人工智能专业 - 讲师
+        {
+            id: 23,
+            major: '人工智能',
+            name: '冯宇航',
+            title: '讲师',
+            teacherImage: 'resources/teacher.jpg',
+            detail: '冯宇航讲师主要负责人工智能基础课程的教学工作。他毕业于国内知名高校，拥有扎实的专业知识和丰富的教学经验。他注重培养学生的编程能力和人工智能算法设计能力，通过大量的实验和项目让学生掌握人工智能的基本原理和方法。他还积极参与学术研究，关注人工智能领域的最新发展动态，将前沿知识融入到教学中，使学生能够接触到最新的技术和理念。'
+        },
+        {
+            id: 24,
+            major: '人工智能',
+            name: '沈心怡',
+            title: '讲师',
+            teacherImage: 'resources/teacher.jpg',
+            detail: '沈心怡讲师专注于自然语言处理和知识图谱的研究。她在相关领域发表了多篇学术论文，提出了多种优化算法，提高了自然语言处理模型的性能和效率。在教学中，她注重培养学生的算法设计和分析能力，通过实际案例让学生掌握自然语言处理算法的设计思想和实现方法。她还鼓励学生参与科研项目，培养学生的创新能力和实践能力。'
+        },
+        // 补充剩余讲师数据
+        {
+            id: 25,
+            major: '大数据',
+            name: '叶梓轩',
+            title: '讲师',
+            teacherImage: 'resources/teacher.jpg',
+            detail: '叶梓轩讲师在大数据实时处理和流计算方面有着深入的研究。他在相关领域发表了多篇学术论文，提出了多种优化算法，提高了大数据实时处理的效率和准确性。在教学中，他注重培养学生的实时数据处理能力，通过实际案例让学生掌握流计算的原理和方法。他还鼓励学生参与科研项目，培养学生的创新能力和实践能力。'
+        },
+        {
+            id: 26,
+            major: '大数据',
+            name: '魏思涵',
+            title: '讲师',
+            teacherImage: 'resources/teacher.jpg',
+            detail: '魏思涵讲师专注于大数据可视化和交互式分析的研究。她在相关领域发表了多篇学术论文，提出了多种创新的可视化方法和技术。在教学中，她注重培养学生的可视化设计能力和数据分析能力，通过实际项目让学生掌握大数据可视化的原理和方法。她还积极组织学生参加各类大数据可视化竞赛，提高学生的实践能力和创新能力。'
+        },
+        {
+            id: 27,
+            major: '计算机科学与技术',
+            name: '吕俊辉',
+            title: '讲师',
+            teacherImage: 'resources/teacher.jpg',
+            detail: '吕俊辉讲师在计算机网络编程和分布式系统方面有着丰富的经验。他参与编写了多本相关教材，为计算机科学与技术领域的教育事业做出了重要贡献。他的研究方向主要包括网络协议分析、分布式系统架构等。在教学中，他注重理论与实践相结合，通过大量的案例分析和实际项目，让学生更好地掌握计算机网络编程和分布式系统的技术和应用。他还积极组织学生参加各类网络编程竞赛，提高学生的实践能力和创新能力。'
+        },
+        {
+            id: 28,
+            major: '计算机科学与技术',
+            name: '苏雅琴',
+            title: '讲师',
+            teacherImage: 'resources/teacher.jpg',
+            detail: '苏雅琴讲师致力于计算机体系结构和编译原理的研究。她在相关领域发表了多篇高质量的学术论文，提出了多种有效的优化策略。她参与了多个国家级和省部级科研项目，为计算机系统的高效运行提供了重要的理论支持和技术保障。在教学方面，她注重培养学生的计算机体系结构设计和编译优化能力，通过实际案例让学生了解计算机体系结构和编译原理的重要性。她的教学方法生动有趣，深受学生们的欢迎。'
+        },
+        {
+            id: 29,
+            major: '软件工程',
+            name: '杜逸凡',
+            title: '讲师',
+            teacherImage: 'resources/teacher.jpg',
+            detail: '杜逸凡讲师主要负责软件工程测试和质量保证的教学工作。他毕业于国内知名高校，拥有扎实的专业知识和丰富的教学经验。他注重培养学生的软件测试能力和质量控制能力，通过大量的实验和项目让学生掌握软件工程测试和质量保证的基本原理和方法。他还积极参与学术研究，关注软件工程领域的最新发展动态，将前沿知识融入到教学中，使学生能够接触到最新的技术和理念。'
+        },
+        {
+            id: 30,
+            major: '软件工程',
+            name: '彭雨泽',
+            title: '讲师',
+            teacherImage: 'resources/teacher.jpg',
+            detail: '彭雨泽讲师专注于软件工程过程管理和敏捷开发的研究。他在相关领域发表了多篇学术论文，提出了多种优化算法，提高了软件项目开发的效率和质量。在教学中，他注重培养学生的软件工程过程管理能力和敏捷开发能力，通过实际案例让学生掌握软件工程过程管理和敏捷开发的思想和方法。他还鼓励学生参与科研项目，培养学生的创新能力和实践能力。'
+        },
+        {
+            id: 31,
+            major: '人工智能',
+            name: '蒋宇凡',
+            title: '讲师',
+            teacherImage: 'resources/teacher.jpg',
+            detail: '蒋宇凡讲师在人工智能机器人和智能控制方面有着深入的研究。他在相关领域发表了多篇学术论文，提出了多种优化算法，提高了机器人的智能控制水平。在教学中，他注重培养学生的机器人控制能力和智能算法设计能力，通过实际案例让学生掌握人工智能机器人和智能控制的原理和方法。他还鼓励学生参与科研项目，培养学生的创新能力和实践能力。'
+        },
+        {
+            id: 32,
+            major: '人工智能',
+            name: '曹诗涵',
+            title: '讲师',
+            teacherImage: 'resources/teacher.jpg',
+            detail: '曹诗涵讲师专注于人工智能深度学习模型优化和应用的研究。她在相关领域发表了多篇学术论文，提出了多种优化算法，提高了深度学习模型的性能和效率。在教学中，她注重培养学生的深度学习模型设计和优化能力，通过实际案例让学生掌握深度学习模型优化和应用的设计思想和实现方法。她还鼓励学生参与科研项目，培养学生的创新能力和实践能力。'
+        },
+        {
+            id: 33,
+            major: '大数据',
+            name: '丁梓轩',
+            title: '讲师',
+            teacherImage: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fsafe-img.xhscdn.com%2Fbw1%2F20c48fb6-1933-4442-823a-0002bfa13246%3FimageView2%2F2%2Fw%2F1080%2Fformat%2Fjpg&refer=http%3A%2F%2Fsafe-img.xhscdn.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1752568798&t=117b5d48bc0ee854c2c8d7f8fbeba433',
+            detail: '丁梓轩讲师在大数据挖掘和数据分析方面有着深入的研究。他在相关领域发表了多篇学术论文，提出了多种优化算法，提高了大数据挖掘和分析的效率和准确性。在教学中，他注重培养学生的大数据挖掘和分析能力，通过实际案例让学生掌握大数据挖掘和分析的原理和方法。他还鼓励学生参与科研项目，培养学生的创新能力和实践能力。'
+        },
+        {
+            id: 34,
+            major: '大数据',
+            name: '谢思涵',
+            title: '讲师',
+            teacherImage: 'resources/teacher.jpg',
+            detail: '谢思涵讲师专注于大数据安全和隐私保护的研究。她在相关领域发表了多篇学术论文，提出了多种创新的安全防护策略。在教学中，她注重培养学生的大数据安全意识和隐私保护能力，通过实际项目让学生掌握大数据安全和隐私保护的原理和方法。她还积极组织学生参加各类大数据安全竞赛，提高学生的实践能力和创新能力。'
+        },
+        {
+            id: 35,
+            major: '计算机科学与技术',
+            name: '方俊辉',
+            title: '讲师',
+            teacherImage: 'resources/teacher.jpg',
+            detail: '方俊辉讲师在计算机图形学和动画设计方面有着丰富的经验。他参与编写了多本相关教材，为计算机科学与技术领域的教育事业做出了重要贡献。他的研究方向主要包括图形算法、动画制作技术等。在教学中，他注重理论与实践相结合，通过大量的案例分析和实际项目，让学生更好地掌握计算机图形学和动画设计的技术和应用。他还积极组织学生参加各类图形设计竞赛，提高学生的实践能力和创新能力。'
+        },
+        {
+            id: 36,
+            major: '计算机科学与技术',
+            name: '袁雅琴',
+            title: '讲师',
+            teacherImage: 'resources/teacher.jpg',
+            detail: '袁雅琴讲师致力于计算机网络安全和攻防技术的研究。她在相关领域发表了多篇高质量的学术论文，提出了多种有效的网络安全防护策略。她参与了多个国家级和省部级科研项目，为计算机网络的安全运行提供了重要的理论支持和技术保障。在教学方面，她注重培养学生的网络安全意识和攻防能力，通过实际案例让学生了解计算机网络安全和攻防技术的重要性。她的教学方法生动有趣，深受学生们的欢迎。'
+        },
+        {
+            id: 37,
+            major: '软件工程',
+            name: '程逸凡',
+            title: '讲师',
+            teacherImage: 'resources/teacher.jpg',
+            detail: '程逸凡讲师主要负责软件工程需求工程和软件设计的教学工作。他毕业于国内知名高校，拥有扎实的专业知识和丰富的教学经验。他注重培养学生的软件需求分析能力和软件设计能力，通过大量的实验和项目让学生掌握软件工程需求工程和软件设计的基本原理和方法。他还积极参与学术研究，关注软件工程领域的最新发展动态，将前沿知识融入到教学中，使学生能够接触到最新的技术和理念。'
+        },
+        {
+            id: 38,
+            major: '软件工程',
+            name: '韩雨泽',
+            title: '讲师',
+            teacherImage: 'resources/teacher.jpg',
+            detail: '韩雨泽讲师专注于软件工程软件维护和重构的研究。他在相关领域发表了多篇学术论文，提出了多种优化算法，提高了软件维护和重构的效率和质量。在教学中，他注重培养学生的软件维护和重构能力，通过实际案例让学生掌握软件工程软件维护和重构的思想和方法。他还鼓励学生参与科研项目，培养学生的创新能力和实践能力。'
+        },
+        {
+            id: 39,
+            major: '人工智能',
+            name: '曾宇凡',
+            title: '讲师',
+            teacherImage: 'resources/teacher.jpg',
+            detail: '曾宇凡讲师在人工智能自然语言生成和对话系统方面有着深入的研究。他在相关领域发表了多篇学术论文，提出了多种优化算法，提高了自然语言生成和对话系统的性能和效率。在教学中，他注重培养学生的自然语言生成和对话系统设计能力，通过实际案例让学生掌握人工智能自然语言生成和对话系统的原理和方法。他还鼓励学生参与科研项目，培养学生的创新能力和实践能力。'
+        },
+        {
+            id: 40,
+            major: '人工智能',
+            name: '谭诗涵',
+            title: '讲师',
+            teacherImage: 'resources/teacher.jpg',
+            detail: '谭诗涵讲师专注于人工智能计算机视觉和目标检测的研究。她在相关领域发表了多篇学术论文，提出了多种优化算法，提高了计算机视觉和目标检测的准确性和效率。在教学中，她注重培养学生的计算机视觉和目标检测能力，通过实际案例让学生掌握人工智能计算机视觉和目标检测的设计思想和实现方法。她还鼓励学生参与科研项目，培养学生的创新能力和实践能力。'
+        },
+        {
+            id: 41,
+            major: '大数据',
+            name: '陆梓轩',
+            title: '讲师',
+            teacherImage: 'resources/teacher.jpg',
+            detail: '陆梓轩讲师在大数据机器学习和数据挖掘算法方面有着深入的研究。他在相关领域发表了多篇学术论文，提出了多种优化算法，提高了大数据机器学习和数据挖掘的效率和准确性。在教学中，他注重培养学生的大数据机器学习和数据挖掘能力，通过实际案例让学生掌握大数据机器学习和数据挖掘的原理和方法。他还鼓励学生参与科研项目，培养学生的创新能力和实践能力。'
+        },
+        {
+            id: 42,
+            major: '大数据',
+            name: '邱思涵',
+            title: '讲师',
+            teacherImage: 'resources/teacher.jpg',
+            detail: '邱思涵讲师专注于大数据存储和管理的研究。她在相关领域发表了多篇学术论文，提出了多种创新的存储和管理策略。在教学中，她注重培养学生的大数据存储和管理能力，通过实际项目让学生掌握大数据存储和管理的原理和方法。她还积极组织学生参加各类大数据存储和管理竞赛，提高学生的实践能力和创新能力。'
+        },
+        {
+            id: 43,
+            major: '计算机科学与技术',
+            name: '夏俊辉',
+            title: '讲师',
+            teacherImage: 'resources/teacher.jpg',
+            detail: '夏俊辉讲师在计算机操作系统和并发编程方面有着丰富的经验。他参与编写了多本相关教材，为计算机科学与技术领域的教育事业做出了重要贡献。他的研究方向主要包括操作系统内核设计、并发算法等。在教学中，他注重理论与实践相结合，通过大量的案例分析和实际项目，让学生更好地掌握计算机操作系统和并发编程的技术和应用。他还积极组织学生参加各类操作系统开发竞赛，提高学生的实践能力和创新能力。'
+        },
+        {
+            id: 44,
+            major: '计算机科学与技术',
+            name: '贾雅琴',
+            title: '讲师',
+            teacherImage: 'resources/teacher.jpg',
+            detail: '贾雅琴讲师致力于计算机体系结构和高性能计算的研究。她在相关领域发表了多篇高质量的学术论文，提出了多种有效的优化策略。她参与了多个国家级和省部级科研项目，为计算机系统的高效运行提供了重要的理论支持和技术保障。在教学方面，她注重培养学生的计算机体系结构设计和高性能计算能力，通过实际案例让学生了解计算机体系结构和高性能计算的重要性。她的教学方法生动有趣，深受学生们的欢迎。'
+        },
+        {
+            id: 45,
+            major: '软件工程',
+            name: '石逸凡',
+            title: '讲师',
+            teacherImage: 'resources/teacher.jpg',
+            detail: '石逸凡讲师主要负责软件工程软件项目管理和团队协作的教学工作。他毕业于国内知名高校，拥有扎实的专业知识和丰富的教学经验。他注重培养学生的软件项目管理能力和团队协作能力，通过大量的实验和项目让学生掌握软件工程软件项目管理和团队协作的基本原理和方法。他还积极参与学术研究，关注软件工程领域的最新发展动态，将前沿知识融入到教学中，使学生能够接触到最新的技术和理念。'
+        },
+        {
+            id: 46,
+            major: '软件工程',
+            name: '汪雨泽',
+            title: '讲师',
+            teacherImage: 'resources/teacher.jpg',
+            detail: '汪雨泽讲师专注于软件工程软件配置管理和版本控制的研究。他在相关领域发表了多篇学术论文，提出了多种优化算法，提高了软件配置管理和版本控制的效率和质量。在教学中，他注重培养学生的软件配置管理和版本控制能力，通过实际案例让学生掌握软件工程软件配置管理和版本控制的思想和方法。他还鼓励学生参与科研项目，培养学生的创新能力和实践能力。'
+        },
+        {
+            id: 47,
+            major: '人工智能',
+            name: '林宇凡',
+            title: '讲师',
+            teacherImage: 'resources/teacher.jpg',
+            detail: '林宇凡讲师在人工智能强化学习和智能决策方面有着深入的研究。他在相关领域发表了多篇学术论文，提出了多种优化算法，提高了强化学习和智能决策的性能和效率。在教学中，他注重培养学生的强化学习和智能决策能力，通过实际案例让学生掌握人工智能强化学习和智能决策的原理和方法。他还鼓励学生参与科研项目，培养学生的创新能力和实践能力。'
+        },
+        {
+            id: 48,
+            major: '人工智能',
+            name: '邹诗涵',
+            title: '讲师',
+            teacherImage: 'resources/teacher.jpg',
+            detail: '邹诗涵讲师专注于人工智能知识图谱和语义网的研究。她在相关领域发表了多篇学术论文，提出了多种优化算法，提高了知识图谱和语义网的构建和应用效率。在教学中，她注重培养学生的知识图谱和语义网设计能力，通过实际案例让学生掌握人工智能知识图谱和语义网的设计思想和实现方法。她还鼓励学生参与科研项目，培养学生的创新能力和实践能力。'
+        }
+    ];
+    const matchedTeacher = teacherData.find(t => t.id === teacherId);
+    console.log(matchedTeacher)
+
+    const teacherDetailSpan = document.getElementById('headerDetail');
+    teacherDetailSpan.textContent = `${matchedTeacher.name}老师详情`;
+
+    const teacherImageElement = document.getElementById('detailImage');
+    teacherImageElement.src = matchedTeacher.teacherImage;
+
+    const teacherInfoDiv = document.getElementById('teacherInfo');
+
+    // 动态插入数据
+    teacherInfoDiv.innerHTML = `
+    <p><span class="detail-s">姓名</span>: ${matchedTeacher.name}</p>
+    <p><span class="detail-s">专业</span>: ${matchedTeacher.major}</p>
+    <p><span class="detail-s">职称</span>: ${matchedTeacher.title}</p>
+    <p><span class="detail-s">详细描述</span>: ${matchedTeacher.detail}</p>
+`;
+</script>
+</body>
+</html>
