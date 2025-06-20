@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>实验室</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.2/dist/echarts.min.js"></script>
+    <style>
+    * {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    }
+    .container-all {
+    width: 100%;
+    height: 100%;
+    /*background: green;*/
+    background-color: #f9fafb;
+    }
+    .header-all {
+    display: flex;
+    height: 6.67vh;
+    background-color: #f9fafb;
+    width: 100%;
+    }
+    .header-all > img {
+    margin-top: 1vh;
+    margin-left: 15vw;
+    }
+    .header-inf {
+    margin-top: 1vh;
+    display: inline-block;
+    margin-right: 10vw;
+    margin-left: auto;
+    align-content: center;
+    }
+    .header-inf > a {
+    color: rgba(0, 0, 0, 0.49);
+    margin: 0 0.5vw;
+    text-decoration: none;
+    }
+    .header-inf >a:hover {
+    color: black;
+    transition: 0.5s;
+    }
+    .nav-bar {
+    background: #1F343A;
+    height: 4.81vh;
+    }
+    .navs {
+    margin-left: 15vw;
+    }
+    .navs ul {
+    list-style-type: none;
+    margin-bottom: 0;
+    }
+    .navs li {
+    display: inline-block;
+    }
+    .navs a {
+    display: block;
+    text-decoration: none;
+    padding: 1.4vh 1.6vw;
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    }
+    .navs a:hover {
+    color: rgba(255, 255, 255, 0.71);
+    }
+    .content-all {
+        margin-top: 50px;
+        padding: 0 20px;
+    }
+    .then-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .search-all {
+        background-color: white;
+        padding: 30px 200px 10px 200px;
+        border-top-left-radius: 12px;
+        border-top-right-radius: 12px;
+    }
+    .form-m {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-end;
+    }
+    .input-m {
+        margin: 0 45px;
+        width: 300px;
+    }
+    .select-m {
+        margin: 0 35px;
+        width:200px;
+        display: flex;
+    }
+    .btn {
+        width: 75px;
+    }
+    .card-container {
+        font-family: 'Segoe UI', system-ui, sans-serif;
+        display: flex;
+        padding: 10px 50px;
+    }
+    .card {
+        width: 250px;
+        margin: 20px 40px;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        border: none;
+    }
+
+    .card-img {
+        width: 250px;
+        height: 180px;
+        object-fit: cover;
+        border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .card-content {
+        padding: 12px 20px;
+        background: white;
+    }
+
+    .card-title {
+        margin: 0 0 8px 0;
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #2c3e50;
+    }
+
+    .card-desc {
+        margin: 0 0 16px 0;
+        font-size: 0.9rem;
+        color: #7f8c8d;
+        line-height: 1.4;
+    }
+
+    .card-btn {
+        display: inline-block;
+        padding: 6px 12px;
+        margin-left: 120px;
+        background-color: #4ca3af;
+        color: white;
+        text-decoration: none;
+        border-radius: 4px;
+        font-size: 16px;
+        font-weight: 500;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+
+    .card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    }
+
+    .card-btn:hover  {
+        color: #1F343A;
+    }
+
+    .card:active {
+        transform: translateY(0);
+    }
+
+    .card:active .card-btn {
+        transform: translateY(0);
+    }
+    .card-all {
+        background-color: white;
+        border-bottom-right-radius: 12px;
+        border-bottom-left-radius: 12px;
+    }
+    .form-label {
+        margin-bottom: .5rem;
+        width: 80px;
+        margin-top: 10px;
+    }
+    .footer-me {
+        bottom: 0;
+        background-color: #1F343A;
+        text-align: center;
+        height: 100px;
+        margin-top: 150px;
+        padding-top: 20px;
+    }
+    .back-n {
+        margin-top: 0px;
+        margin-left:20px;
+        border: 2px solid black;
+        color: black;
+        border-radius: 4px;
+        width: 80px;
+        font-weight: bolder;
+        font-size: 20px;
+    }
+    .back-n:hover {
+        background-color: white;
+        color: #4285f4;
+        border: 2px solid #4285f4;
+    }
+    </style>
+</head>
+<body>
+<div class="container-all">
+    <div class="header-all">
+        <img src="resources/schoolbadge.png">
+        <div class="header-inf">
+            <a href="https://cas.webvpn.nefu.edu.cn/cas/login?service=https%3A%2F%2Fwebvpn.nefu.edu.cn%2Fusers%2Fauth%2Fcas%2Fcallback%3Furl%3Dhttps%253A%252F%252Fwww.nefu.edu.cn%252F">数字东林</a>|
+            <a href="https://mail.nefu.edu.cn/">电子邮件</a>|
+            <a href="https://cas.webvpn.nefu.edu.cn/cas/login?service=https%3A%2F%2Fwebvpn.nefu.edu.cn%2Fusers%2Fauth%2Fcas%2Fcallback%3Furl%3Dhttps%253A%252F%252Fwww.nefu.edu.cn%252F">领导信箱</a>|
+            <a href="https://tel.nefu.edu.cn/">校园电话</a>|
+            <a href="https://map.nefu.edu.cn/">校园地图</a>
+        </div>
+    </div>
+    <div class="nav-bar">
+        <div class="navs">
+            <ul>
+                <li><a href="homepage">首页</a></li>
+                <li><a href="introduce">专业介绍</a></li>
+                <li><a href="lab">实验室</a></li>
+                <li><a href="teacher">教师队伍</a></li>
+                <li><a href="job">就业指南</a></li>
+                <li><a href="newNotice">新闻公告</a></li>
+                <li><a href="contact">联系我们</a></li>
+                <li><a href="manage">后台管理</a></li>
+                <li><a href="filter/login">退出登录</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="content-all">
+        <button id="backButton" class="btn btn-outline-secondary back-n" type="button" style="display: none;" onclick="window.location.href='lab';">返回</button>
+        <div class="then-container">
+            <div class="search-all">
+                <form class="form-m">
+                    <div class="input-m">
+                        <input type="text" class="form-control" id="validationDefault01" placeholder="请输入实验室号(非必填)">
+                    </div>
+                    <div class="select-m">
+                        <span for="validationDefault02" class="form-label">专业：</span>
+                        <select class="form-select" id="validationDefault02" required>
+                            <option selected value="">选择专业</option>
+                            <option value="1">软件工程</option>
+                            <option value="2">大数据</option>
+                            <option value="3">计算机科学与技术</option>
+                            <option value="4">人工智能</option>
+                        </select>
+                    </div>
+                    <div class="select-m">
+                        <label for="validationDefault03" class="form-label">状态</label>
+                        <select class="form-select" id="validationDefault03" required>
+                            <option selected value="">实验室状态</option>
+                            <option value="1">空闲</option>
+                            <option value="2">使用中</option>
+                        </select>
+                    </div>
+                    <div class="select-m">
+                        <label for="validationDefault04" class="form-label">节次:</label>
+                        <select class="form-select" id="validationDefault04" required >
+                            <option value="1">1-2</option>
+                            <option value="2">3-4</option>
+                            <option value="3">5-6</option>
+                            <option value="4">7-8</option>
+                        </select>
+                    </div>
+                    <div class="button-m">
+                        <button id="searchButton" class="btn btn-primary" type="submit">搜索</button>
+                    </div>
+                </form>
+            </div>
+            <div class="card-all">
+            <div class="card-container">
+                <div class="card">
+                    <img src="https://news.nefu.edu.cn/__local/1/09/29/E74B50F90B72D5E57C696FC1ADB_6A99F235_706AC9.jpg" class="card-img" alt="实验室901实景图" loading="lazy">
+                    <div class="card-content">
+                        <h3 class="card-title">实验室901</h3>
+                        <p class="card-desc">智能计算与数据分析</p>
+                        <a href="detail?labNumber=901" class="card-btn ">查看详情</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="https://news.nefu.edu.cn/__local/1/09/29/E74B50F90B72D5E57C696FC1ADB_6A99F235_706AC9.jpg" class="card-img" alt="实验室902实景图" loading="lazy">
+                    <div class="card-content">
+                        <h3 class="card-title">实验室902</h3>
+                        <p class="card-desc">软件测试与质量保证</p>
+                        <a href="detail?labNumber=902" class="card-btn ">查看详情</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="https://news.nefu.edu.cn/__local/1/09/29/E74B50F90B72D5E57C696FC1ADB_6A99F235_706AC9.jpg" class="card-img" alt="实验室903实景图" loading="lazy">
+                    <div class="card-content">
+                        <h3 class="card-title">实验室903</h3>
+                        <p class="card-desc">前端开发与框架应用</p>
+                        <a href="detail?labNumber=903" class="card-btn ">查看详情</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="https://news.nefu.edu.cn/__local/1/09/29/E74B50F90B72D5E57C696FC1ADB_6A99F235_706AC9.jpg" class="card-img" alt="实验室904实景图" loading="lazy">
+                    <div class="card-content">
+                        <h3 class="card-title">实验室904</h3>
+                        <p class="card-desc">后端开发与微服务架构</p>
+                        <a href="detail?labNumber=904" class="card-btn ">查看详情</a>
+                    </div>
+                </div>
+            </div>
+                <div class="card-container">
+                    <div class="card">
+                        <img src="https://news.nefu.edu.cn/__local/1/09/29/E74B50F90B72D5E57C696FC1ADB_6A99F235_706AC9.jpg" class="card-img" alt="实验室905实景图" loading="lazy">
+                        <div class="card-content">
+                            <h3 class="card-title">实验室905</h3>
+                            <p class="card-desc">移动应用开发与跨平台技术</p>
+                            <a href="detail?labNumber=905" class="card-btn ">查看详情</a>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <img src="https://news.nefu.edu.cn/__local/1/09/29/E74B50F90B72D5E57C696FC1ADB_6A99F235_706AC9.jpg" class="card-img" alt="实验室906实景图" loading="lazy">
+                        <div class="card-content">
+                            <h3 class="card-title">实验室906</h3>
+                            <p class="card-desc">人工智能与深度学习框架</p>
+                            <a href="detail?labNumber=906" class="card-btn ">查看详情</a>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <img src="https://news.nefu.edu.cn/__local/1/09/29/E74B50F90B72D5E57C696FC1ADB_6A99F235_706AC9.jpg" class="card-img" alt="实验室907实景图" loading="lazy">
+                        <div class="card-content">
+                            <h3 class="card-title">实验室907</h3>
+                            <p class="card-desc">云计算与容器编排技术</p>
+                            <a href="detail?labNumber=907" class="card-btn ">查看详情</a>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <img src="https://news.nefu.edu.cn/__local/1/09/29/E74B50F90B72D5E57C696FC1ADB_6A99F235_706AC9.jpg" class="card-img" alt="实验室908实景图" loading="lazy">
+                        <div class="card-content">
+                            <h3 class="card-title">实验室908</h3>
+                            <p class="card-desc">网络安全与渗透测试</p>
+                            <a href="detail?labNumber=908" class="card-btn ">查看详情</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-container">
+                    <div class="card">
+                        <img src="https://news.nefu.edu.cn/__local/1/09/29/E74B50F90B72D5E57C696FC1ADB_6A99F235_706AC9.jpg" class="card-img" alt="实验室909实景图" loading="lazy">
+                        <div class="card-content">
+                            <h3 class="card-title">实验室909</h3>
+                            <p class="card-desc">大数据分析与可视化</p>
+                            <a href="detail?labNumber=909" class="card-btn">查看详情</a>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <img src="https://news.nefu.edu.cn/__local/1/09/29/E74B50F90B72D5E57C696FC1ADB_6A99F235_706AC9.jpg" class="card-img" alt="实验室910实景图" loading="lazy">
+                        <div class="card-content">
+                            <h3 class="card-title">实验室910</h3>
+                            <p class="card-desc">物联网与嵌入式系统</p>
+                            <a href="detail?labNumber=910" class="card-btn">查看详情</a>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <img src="https://news.nefu.edu.cn/__local/1/09/29/E74B50F90B72D5E57C696FC1ADB_6A99F235_706AC9.jpg" class="card-img" alt="实验室911实景图" loading="lazy">
+                        <div class="card-content">
+                            <h3 class="card-title">实验室911</h3>
+                            <p class="card-desc">区块链与智能合约</p>
+                            <a href="detail?labNumber=911" class="card-btn">查看详情</a>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <img src="https://news.nefu.edu.cn/__local/1/09/29/E74B50F90B72D5E57C696FC1ADB_6A99F235_706AC9.jpg" class="card-img" alt="实验室912实景图" loading="lazy">
+                        <div class="card-content">
+                            <h3 class="card-title">实验室912</h3>
+                            <p class="card-desc">计算机图形学与VR</p>
+                            <a href="detail?labNumber=912" class="card-btn">查看详情</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-container">
+                    <div class="card">
+                        <img src="https://news.nefu.edu.cn/__local/1/09/29/E74B50F90B72D5E57C696FC1ADB_6A99F235_706AC9.jpg" class="card-img" alt="实验室913实景图" loading="lazy">
+                        <div class="card-content">
+                            <h3 class="card-title">实验室913</h3>
+                            <p class="card-desc">软件测试与质量保障</p>
+                            <a href="detail?labNumber=913" class="card-btn">查看详情</a>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <img src="https://news.nefu.edu.cn/__local/1/09/29/E74B50F90B72D5E57C696FC1ADB_6A99F235_706AC9.jpg" class="card-img" alt="实验室914实景图" loading="lazy">
+                        <div class="card-content">
+                            <h3 class="card-title">实验室914</h3>
+                            <p class="card-desc">自然语言处理</p>
+                            <a href="detail?labNumber=914" class="card-btn">查看详情</a>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <img src="https://news.nefu.edu.cn/__local/1/09/29/E74B50F90B72D5E57C696FC1ADB_6A99F235_706AC9.jpg" class="card-img" alt="实验室915实景图" loading="lazy">
+                        <div class="card-content">
+                            <h3 class="card-title">实验室915</h3>
+                            <p class="card-desc">机器人流程自动化</p>
+                            <a href="detail?labNumber=915" class="card-btn">查看详情</a>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <img src="https://news.nefu.edu.cn/__local/1/09/29/E74B50F90B72D5E57C696FC1ADB_6A99F235_706AC9.jpg" class="card-img" alt="实验室916实景图" loading="lazy">
+                        <div class="card-content">
+                            <h3 class="card-title">实验室916</h3>
+                            <p class="card-desc">量子计算基础研究</p>
+                            <a href="detail?labNumber=916" class="card-btn">查看详情</a>
+                        </div>
+                    </div>
+                </div>
+            <div class="card-container">
+                <div class="card">
+                    <img src="https://news.nefu.edu.cn/__local/1/09/29/E74B50F90B72D5E57C696FC1ADB_6A99F235_706AC9.jpg" class="card-img" alt="实验室917实景图" loading="lazy">
+                    <div class="card-content">
+                        <h3 class="card-title">实验室917</h3>
+                        <p class="card-desc">数字孪生技术应用</p>
+                        <a href="detail?labNumber=917" class="card-btn">查看详情</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="https://news.nefu.edu.cn/__local/1/09/29/E74B50F90B72D5E57C696FC1ADB_6A99F235_706AC9.jpg" class="card-img" alt="实验室918实景图" loading="lazy">
+                    <div class="card-content">
+                        <h3 class="card-title">实验室918</h3>
+                        <p class="card-desc">边缘计算与5G应用</p>
+                        <a href="detail?labNumber=918" class="card-btn">查看详情</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="https://news.nefu.edu.cn/__local/1/09/29/E74B50F90B72D5E57C696FC1ADB_6A99F235_706AC9.jpg" class="card-img" alt="实验室919实景图" loading="lazy">
+                    <div class="card-content">
+                        <h3 class="card-title">实验室919</h3>
+                        <p class="card-desc">计算机视觉与图像处理</p>
+                        <a href="detail?labNumber=919" class="card-btn">查看详情</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="https://news.nefu.edu.cn/__local/1/09/29/E74B50F90B72D5E57C696FC1ADB_6A99F235_706AC9.jpg" class="card-img" alt="实验室920实景图" loading="lazy">
+                    <div class="card-content">
+                        <h3 class="card-title">实验室920</h3>
+                        <p class="card-desc">高性能计算与并行处理</p>
+                        <a href="detail?labNumber=920" class="card-btn">查看详情</a>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-me">
+        <p style="color: #eeeeee;margin-top: 25px" >地址‌：黑龙江省哈尔滨市香坊区和兴路26号<span style="margin-left: 45px">邮编‌：150040</span><span style="margin-left: 45px"> 信息公开工作办公室：0451-82191631（咨询时间：工作日8:30-11:30、14:00-17:00，节假日除外）</span></p>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<script>
+    const labData = [
+        {
+            labNumber: 901,
+            labStatus: '使用中',
+            labWhat: '软件工程',
+            labImage: 'https://news.nefu.edu.cn/__local/4/7E/41/75D9FD58A81CE99F1052BBBD56C_56044E78_2C1073.jpg',
+            detail: '本实验室专注于软件工程领域，配备先进的开发工具和服务器资源。团队成员在此进行软件项目的全生命周期管理，包括需求分析、设计、编码和测试，致力于打造高质量、可维护的软件系统。'
+        },
+        {
+            labNumber: 902,
+            labStatus: '空闲',
+            labWhat: '计算机科学与技术',
+            labImage: 'https://news.nefu.edu.cn/__local/7/42/23/6312B3778D09CCE42852117FE57_4852C49E_10E3A84.jpg',
+            detail: '此实验室聚焦计算机科学与技术研究，涵盖算法优化、数据结构设计等方向。拥有高性能计算设备，为科研人员提供良好的实验环境，助力推动计算机领域的技术创新。'
+        },
+        {
+            labNumber: 903,
+            labStatus: '使用中',
+            labWhat: '大数据',
+            labImage: 'https://news.nefu.edu.cn/__local/7/7C/B3/B96EE5BDEFF542C436CB620550F_C6838F1F_4D4F65.jpg',
+            detail: '大数据实验室拥有海量数据存储和处理设备，专业团队在此进行数据挖掘、分析和可视化工作。通过对大数据的深度剖析，为各行业提供有价值的决策支持和解决方案。'
+        },
+        {
+            labNumber: 904,
+            labStatus: '空闲',
+            labWhat: '人工智能',
+            labImage: 'https://news.nefu.edu.cn/__local/B/CD/37/BB0F4DDC9C74B185B0C508172E1_95BD540E_1457C7.jpg',
+            detail: '人工智能实验室专注于机器学习、深度学习等前沿技术研究。配备先进的 GPU 集群，用于训练复杂的神经网络模型，致力于开发具有智能决策和自主学习能力的系统。'
+        },
+        {
+            labNumber: 905,
+            labStatus: '使用中',
+            labWhat: '软件工程',
+            labImage: 'https://news.nefu.edu.cn/__local/8/12/54/E8D4AD25492322C84FEFAA1C3C2_D7367C34_A6A1E3.jpg',
+            detail: '该软件工程实验室注重软件质量和效率提升，采用敏捷开发方法。团队成员在这进行代码审查、持续集成和自动化测试，确保软件产品能够快速迭代并满足用户需求。'
+        },
+        {
+            labNumber: 906,
+            labStatus: '空闲',
+            labWhat: '计算机科学与技术',
+            labImage: 'https://news.nefu.edu.cn/__local/4/F2/04/C6BAD555FE7D4E9F7638EED7D9B_78CC48FA_BAA51F.jpg',
+            detail: '计算机科学与技术实验室开展计算机体系结构、操作系统等方面的研究。拥有多台高性能工作站，为学生和研究人员提供实践和探索的平台，促进学科知识的创新与发展。'
+        },
+        {
+            labNumber: 907,
+            labStatus: '使用中',
+            labWhat: '大数据',
+            labImage: 'https://news.nefu.edu.cn/__local/1/B3/F5/0EB531C57434BBA541D88808A2E_E8993970_126A44A.jpg',
+            detail: '本大数据实验室专注于实时数据处理和流计算技术。通过分布式计算框架，对实时产生的海量数据进行快速分析，为企业提供实时的业务洞察和决策依据。'
+        },
+        {
+            labNumber: 908,
+            labStatus: '空闲',
+            labWhat: '人工智能',
+            labImage: 'https://news.nefu.edu.cn/__local/3/58/5F/5C8C00588C569A38C9906C38307_ECA0EE4D_1502D3.jpg',
+            detail: '人工智能实验室致力于自然语言处理和计算机视觉领域的研究。利用先进的算法和模型，实现语音识别、图像分类等功能，推动人工智能技术在实际场景中的应用。'
+        },
+        {
+            labNumber: 909,
+            labStatus: '使用中',
+            labWhat: '软件工程',
+            labImage: 'https://news.nefu.edu.cn/__local/6/56/56/C5D14F0009ED25C0E0029F871D4_8493D692_AA5F7.jpg',
+            detail: '软件工程实验室专注于软件安全和隐私保护。团队成员在此进行安全漏洞分析、加密算法研究等工作，为软件系统的安全性和用户隐私提供有力保障。'
+        },
+        {
+            labNumber: 910,
+            labStatus: '空闲',
+            labWhat: '计算机科学与技术',
+            labImage: 'https://news.nefu.edu.cn/__local/3/B5/F5/26B8A6C66542179A5448E6DAD7D_5C1ABA24_64A64F.jpg',
+            detail: '该实验室主要研究计算机网络和通信技术。拥有专业的网络设备和测试环境，开展网络协议优化、网络安全防护等方面的实验，提升网络性能和可靠性。'
+        },
+        {
+            labNumber: 911,
+            labStatus: '使用中',
+            labWhat: '大数据',
+            labImage: 'https://news.nefu.edu.cn/__local/B/CC/42/7878F46A878D627306CF902E7F8_39B4235C_F289B3.jpg',
+            detail: '大数据实验室聚焦于数据仓库和数据治理。通过建立完善的数据管理体系，对海量数据进行清洗、整合和存储，为企业提供高质量的数据资产和数据分析服务。'
+        },
+        {
+            labNumber: 912,
+            labStatus: '空闲',
+            labWhat: '人工智能',
+            labImage: 'https://news.nefu.edu.cn/__local/5/35/67/D2DA59939DC239B563337CD6C5E_870D8C50_B918EF.jpg',
+            detail: '人工智能实验室在强化学习和智能机器人领域开展研究。通过模拟智能体的决策过程，开发具有自主学习和适应能力的机器人，推动人工智能在工业和服务领域的应用。'
+        },
+        {
+            labNumber: 913,
+            labStatus: '使用中',
+            labWhat: '软件工程',
+            labImage: 'https://news.nefu.edu.cn/__local/7/F4/85/0CF3D4DBB363BF8ACCEE18FC1A8_98D8AE6E_3533AE1.jpg',
+            detail: '此软件工程实验室专注于移动应用开发和跨平台技术。团队成员使用先进的开发框架，开发出兼容多种设备的移动应用，满足用户在不同场景下的使用需求。'
+        },
+        {
+            labNumber: 914,
+            labStatus: '空闲',
+            labWhat: '计算机科学与技术',
+            labImage: 'https://news.nefu.edu.cn/__local/B/48/63/0238DAEA6FC3FD3FBF5B0A25139_02C73DA2_19BF66D.jpg',
+            detail: '计算机科学与技术实验室研究量子计算和新型计算模型。探索量子算法和量子通信技术，为未来计算机科学的发展提供理论和实践基础。'
+        },
+        {
+            labNumber: 915,
+            labStatus: '使用中',
+            labWhat: '大数据',
+            labImage: 'https://news.nefu.edu.cn/__local/9/09/F5/96136B2BE5379621EBBCEC9D20C_A91B2E9D_C2A073.jpg',
+            detail: '大数据实验室致力于大数据可视化和交互式分析。通过可视化工具将复杂的数据以直观的方式呈现，帮助用户快速理解数据背后的信息，做出科学的决策。'
+        },
+        {
+            labNumber: 916,
+            labStatus: '空闲',
+            labWhat: '人工智能',
+            labImage: 'https://news.nefu.edu.cn/__local/7/0C/96/264307BB9EAB02BED3C261647E7_0A978A57_CCA030.jpg',
+            detail: '人工智能实验室在情感计算和人机交互领域开展研究。通过分析人类情感和行为模式，开发更加智能、人性化的交互系统，提升用户体验。'
+        },
+        {
+            labNumber: 917,
+            labStatus: '使用中',
+            labWhat: '软件工程',
+            labImage: 'https://news.nefu.edu.cn/__local/6/4B/21/FCE76B23A3349BB2B41BE88018C_06F359FF_B388AD.jpg',
+            detail: '软件工程实验室专注于云计算和微服务架构。通过云平台和微服务技术，实现软件系统的弹性扩展和高效部署，提升系统的可用性和可维护性。'
+        },
+        {
+            labNumber: 918,
+            labStatus: '空闲',
+            labWhat: '计算机科学与技术',
+            labImage: 'https://news.nefu.edu.cn/__local/8/7E/D5/AA1F1EF6F6D6A2556F911B3D452_14EE78BD_1180BA3.jpg',
+            detail: '该实验室研究计算机图形学和虚拟现实技术。通过先进的图形处理算法和硬件设备，创建逼真的虚拟场景，为游戏、教育等领域提供创新的解决方案。'
+        },
+        {
+            labNumber: 919,
+            labStatus: '使用中',
+            labWhat: '大数据',
+            labImage: 'https://news.nefu.edu.cn/__local/7/6E/36/24C242665B2671FBE32DE2D17C8_75D856B0_5C6D45.jpg',
+            detail: '大数据实验室聚焦于生物大数据和医疗数据分析。通过对生物和医疗数据的挖掘和分析，为疾病诊断、治疗和预防提供科学依据，推动医疗行业的发展。'
+        },
+        {
+            labNumber: 920,
+            labStatus: '空闲',
+            labWhat: '人工智能',
+            labImage: 'https://news.nefu.edu.cn/__local/1/09/29/E74B50F90B72D5E57C696FC1ADB_6A99F235_706AC9.jpg',
+            detail: '人工智能实验室在智能推荐系统和个性化服务领域开展研究。通过分析用户行为和偏好，为用户提供精准的推荐服务，提升用户满意度和业务转化率。'
+        }
+    ];
+
+    const form = document.querySelector('.form-m');
+    const cardAll = document.querySelector('.card-all');
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        // 获取表单输入值
+        const labNumberInput = document.getElementById('validationDefault01').value;
+        const majorSelect = document.getElementById('validationDefault02').value;
+        const statusSelect = document.getElementById('validationDefault03').value;
+
+        // 清空卡片容器
+        cardAll.innerHTML = '';
+
+        // 筛选匹配的数据
+        const matchedData = labData.filter(item => {
+            const matchesLabNumber = !labNumberInput || item.labNumber.toString() === labNumberInput;
+            const matchesMajor =  item.labWhat === document.querySelector(`#validationDefault02 option[value="${majorSelect}"]`).textContent;
+            const matchesStatus = item.labStatus === document.querySelector(`#validationDefault03 option[value="${statusSelect}"]`).textContent;
+
+            backButton.style.display = 'inline-block';
+            return matchesLabNumber && matchesMajor && matchesStatus;
+        });
+
+        let cardContainer;
+
+        matchedData.forEach((item, index) => {
+            if (index % 4 === 0) {
+                // 每四个卡片创建一个新的 card-container
+                cardContainer = document.createElement('div');
+                cardContainer.className = 'card-container';
+                cardAll.appendChild(cardContainer);
+            }
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.innerHTML = `
+        <img src="https://news.nefu.edu.cn/__local/1/09/29/E74B50F90B72D5E57C696FC1ADB_6A99F235_706AC9.jpg" class="card-img" alt="">
+        <div class="card-content">
+            <h3 class="card-title">实验室${item.labNumber}</h3>
+            <p class="card-desc">所属：${item.labWhat}</p>
+            <a href="detail?labNumber=${item.labNumber}" class="card-btn ">查看详情</a>
+        </div>
+    `;
+            cardContainer.appendChild(card);
+        });
+    });
+    const searchButton = document.getElementById('searchButton');
+    const backButton = document.getElementById('backButton');
+
+    backButton.addEventListener('click', function() {
+        this.style.display = 'none';
+    });
+</script>
+</body>
+</html>
